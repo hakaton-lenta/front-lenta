@@ -1,0 +1,27 @@
+.header {
+  background-color: #001e64;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 44px;
+  padding-right: 97px;
+}
+
+.header__login > button {
+  background-color: #aa2332;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  padding: 12px 58px;
+  cursor: pointer;
+}
+
+.header__logout > button {
+  background-color: #aa2332;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  padding: 12px 58px;
+  cursor: pointer;
+}
