@@ -1,15 +1,15 @@
 .filter {
-    margin: 12px 0 0 12px;
+  margin: 12px 0 0 12px;
 }
 
 .filter__button {
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: 1px solid #001E64;
-    background-color: transparent;
-    color: black;
-    cursor: pointer;
-    font-size: 28px;
-    font-weight: 500;
-    display: flex;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #001e64;
+  background-color: transparent;
+  color: black;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 500;
+  display: flex;
 }
