@@ -9,87 +9,139 @@ import './navigation.css';
 import { NavLink, useLocation } from 'react-router-dom';
 
 interface ComponentProps {
-    toggleMenu: () => void;
+  toggleMenu: () => void;
 }
 
 const OpenComponent: React.FC<ComponentProps> = ({ toggleMenu }) => {
-    const location = useLocation();
+  const location = useLocation();
 
-    return (
-        <div className='open'>
-            <div className='open__menu'>
-                <button onClick={toggleMenu} className="open__menu-button">
-                    <img src={trendingUp} alt="Menu Icon" />
-                    <span>Аналитика проекта</span>
-                </button>
-                <nav className='open__nav'>
-                    <NavLink to="/" className={`open__menu-link ${location.pathname === '/' ? 'open__menu-active' : ''}`}>
-                        <img src={trello} alt="Icon 1" />
-                        Планер
-                    </NavLink>
-                    <NavLink to="/route2" className={`open__menu-link ${location.pathname === '/route2' ? 'open__menu-active' : ''}`}>
-                        <img src={chartScatter} alt="Icon 1" />
-                        Прогноз
-                    </NavLink>
-                    <NavLink to="/route3" className={`open__menu-link ${location.pathname === '/route3' ? 'open__menu-active' : ''}`}>
-                        <img src={chartLine} alt="Icon 1" />
-                        Статистика
-                    </NavLink>
-                    <NavLink to="/route4" className={`open__menu-link ${location.pathname === '/route4' ? 'open__menu-active' : ''}`}>
-                        <img src={fileText} alt="Icon 1" />
-                        Отчеты
-                    </NavLink>
-                    <NavLink to="/route5" className={`open__menu-link ${location.pathname === '/route5' ? 'open__menu-active' : ''}`}>
-                        <img src={bookOpen} alt="Icon 1" />
-                        Библиотека
-                    </NavLink>
-                </nav>
-            </div>
-        </div>
-    );
+  return (
+    <div className="open">
+      <div className="open__menu">
+        <button onClick={toggleMenu} className="open__menu-button">
+          <img src={trendingUp} alt="Menu Icon" />
+          <span>Аналитика проекта</span>
+        </button>
+        <nav className="open__nav">
+          <NavLink
+            to="/"
+            className={`open__menu-link ${
+              location.pathname === '/' ? 'open__menu-active' : ''
+            }`}
+          >
+            <img src={trello} alt="Icon 1" />
+            Планер
+          </NavLink>
+          <NavLink
+            to="/route2"
+            className={`open__menu-link ${
+              location.pathname === '/route2' ? 'open__menu-active' : ''
+            }`}
+          >
+            <img src={chartScatter} alt="Icon 1" />
+            Прогноз
+          </NavLink>
+          <NavLink
+            to="/route3"
+            className={`open__menu-link ${
+              location.pathname === '/route3' ? 'open__menu-active' : ''
+            }`}
+          >
+            <img src={chartLine} alt="Icon 1" />
+            Статистика
+          </NavLink>
+          <NavLink
+            to="/route4"
+            className={`open__menu-link ${
+              location.pathname === '/route4' ? 'open__menu-active' : ''
+            }`}
+          >
+            <img src={fileText} alt="Icon 1" />
+            Отчеты
+          </NavLink>
+          <NavLink
+            to="/route5"
+            className={`open__menu-link ${
+              location.pathname === '/route5' ? 'open__menu-active' : ''
+            }`}
+          >
+            <img src={bookOpen} alt="Icon 1" />
+            Библиотека
+          </NavLink>
+        </nav>
+      </div>
+    </div>
+  );
 };
 
 const ClosedComponent: React.FC<ComponentProps> = ({ toggleMenu }) => (
-    <div className='close'>
-        <div className='close__menu'>
-            <button onClick={toggleMenu} className="close__menu-button">
-                <img src={trendingUp} alt="Menu Icon" />
-            </button>
-            <nav className='close__nav'>
-                <NavLink to="/" className={`close__menu-link ${location.pathname === '/' ? 'open__menu-active' : ''}`}>
-                    <img src={trello} alt="Icon 1" />
-                </NavLink>
-                <NavLink to="/route1" className={`close__menu-link ${location.pathname === '/1' ? 'open__menu-active' : ''}`}>
-                    <img src={chartScatter} alt="Icon 1" />
-                </NavLink>
-                <NavLink to="/route1" className={`close__menu-link ${location.pathname === '/2' ? 'open__menu-active' : ''}`}>
-                    <img src={chartLine} alt="Icon 1" />
-                </NavLink>
-                <NavLink to="/route1" className={`close__menu-link ${location.pathname === '/3' ? 'open__menu-active' : ''}`}>
-                    <img src={fileText} alt="Icon 1" />
-                </NavLink>
-                <NavLink to="/route1" className={`close__menu-link ${location.pathname === '/4' ? 'open__menu-active' : ''}`}>
-                    <img src={bookOpen} alt="Icon 1" />
-                </NavLink>
-            </nav>
-        </div>
+  <div className="close">
+    <div className="close__menu">
+      <button onClick={toggleMenu} className="close__menu-button">
+        <img src={trendingUp} alt="Menu Icon" />
+      </button>
+      <nav className="close__nav">
+        <NavLink
+          to="/"
+          className={`close__menu-link ${
+            location.pathname === '/' ? 'open__menu-active' : ''
+          }`}
+        >
+          <img src={trello} alt="Icon 1" />
+        </NavLink>
+        <NavLink
+          to="/route1"
+          className={`close__menu-link ${
+            location.pathname === '/1' ? 'open__menu-active' : ''
+          }`}
+        >
+          <img src={chartScatter} alt="Icon 1" />
+        </NavLink>
+        <NavLink
+          to="/route1"
+          className={`close__menu-link ${
+            location.pathname === '/2' ? 'open__menu-active' : ''
+          }`}
+        >
+          <img src={chartLine} alt="Icon 1" />
+        </NavLink>
+        <NavLink
+          to="/route1"
+          className={`close__menu-link ${
+            location.pathname === '/3' ? 'open__menu-active' : ''
+          }`}
+        >
+          <img src={fileText} alt="Icon 1" />
+        </NavLink>
+        <NavLink
+          to="/route1"
+          className={`close__menu-link ${
+            location.pathname === '/4' ? 'open__menu-active' : ''
+          }`}
+        >
+          <img src={bookOpen} alt="Icon 1" />
+        </NavLink>
+      </nav>
     </div>
+  </div>
 );
 
 const Navigation: FC = () => {
-    const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(true);
 
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
-    return (
-        <div>
-            {menuOpen
-                ? <OpenComponent toggleMenu={toggleMenu} />
-                : <ClosedComponent toggleMenu={toggleMenu} />}
-        </div>
-    );
+  return (
+    <div>
+      {menuOpen ? (
+        <OpenComponent toggleMenu={toggleMenu} />
+      ) : (
+        <ClosedComponent toggleMenu={toggleMenu} />
+      )}
+    </div>
+  );
 };
 
 export default Navigation;
