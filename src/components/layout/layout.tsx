@@ -9,7 +9,7 @@ export const Layout: FC = () => {
   return (
     <div className="layout">
       <Header />
-      <div style={{display: 'flex', flexDirection: 'row'}}>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Navigation />
         <Filter />
       </div>
