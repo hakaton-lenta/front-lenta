@@ -37,85 +37,85 @@
   } */
 
 .open {
-    width: 384px;
-    display: flex;
+  width: 384px;
+  display: flex;
 }
 
 .open__menu {
-    margin: 32px auto;
+  margin: 32px auto;
 }
 
 .open__menu-button {
-    width: 312px;
-    display: flex;
-    border: none;
-    border-radius: 4px;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 34px;
-    padding: 0;
+  width: 312px;
+  display: flex;
+  border: none;
+  border-radius: 4px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 34px;
+  padding: 0;
 }
 
-.open__menu-button>img {
-    margin: 6px 12px;
+.open__menu-button > img {
+  margin: 6px 12px;
 }
 
-.open__menu-button>span {
-    margin: 6px 0;
+.open__menu-button > span {
+  margin: 6px 0;
 }
 
 .open__nav {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .open__menu-link {
-    display: flex;
-    align-items: center;
-    margin-top: 12px;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 25px;
-    color: black;
-    padding: 5px 0;
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 25px;
+  color: black;
+  padding: 5px 0;
 }
 
 .open__menu-active {
-    background-color: #E8EEFD;
-    border-radius: 4px;
+  background-color: #e8eefd;
+  border-radius: 4px;
 }
 
 .open__menu-link:active {
-    color: black;
-    opacity: 0.5;
+  color: black;
+  opacity: 0.5;
 }
 
-.open__menu-link>img {
-    margin-right: 12px;
+.open__menu-link > img {
+  margin-right: 12px;
 }
 
 .close {
-    width: 90px;
-    display: flex;
+  width: 90px;
+  display: flex;
 }
 
 .close__menu {
-    margin: 12px auto;
+  margin: 12px auto;
 }
 
 .close__menu-button {
-    border: none;
-    border-radius: 4px;
+  border: none;
+  border-radius: 4px;
 }
 
 .close__nav {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .close__menu-link {
-    display: flex;
-    justify-content: center;
-    margin-top: 6px;
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
 }
