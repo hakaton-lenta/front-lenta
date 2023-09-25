@@ -1,4 +1,7 @@
+@import url('https://fonts.cdnfonts.com/css/futura-pt');
+
 body {
+  font-family: 'Futura PT';
   margin: 0;
   padding: 0;
 }
