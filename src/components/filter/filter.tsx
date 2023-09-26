@@ -30,23 +30,23 @@ const Filter: FC = () => {
 
   const handleChangeGroup = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
-  
+
     if (!group.includes(newValue)) {
       setGroup((prevGroup) => [...prevGroup, newValue]);
     }
   };
-  
+
   const handleChangeCategory = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
-  
+
     if (!category.includes(newValue)) {
       setCategory((prevCategory) => [...prevCategory, newValue]);
     }
   };
-  
+
   const handleChangeSubcategories = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
-  
+
     if (!subcategories.includes(newValue)) {
       setSubcategories((prevSubcategories) => [...prevSubcategories, newValue]);
     }
@@ -58,7 +58,7 @@ const Filter: FC = () => {
 
   const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectAll(event.target.checked);
-  
+
     if (event.target.checked) {
       const allTkValues = ['Магнит', 'Пятерочка', 'Лента'];
       setTk(allTkValues);
@@ -68,7 +68,6 @@ const Filter: FC = () => {
   };
 
   const handleRemoveChip = (field: string, value: string) => {
-
     switch (field) {
       case 'tk':
         setTk((prevTk) => prevTk.filter((item) => item !== value));
@@ -77,11 +76,13 @@ const Filter: FC = () => {
         setGroup((prevGroup) => prevGroup.filter((item) => item !== value));
         break;
       case 'category':
-        setCategory((prevCategory) => prevCategory.filter((item) => item !== value));
+        setCategory((prevCategory) =>
+          prevCategory.filter((item) => item !== value),
+        );
         break;
       case 'subcategories':
         setSubcategories((prevSubcategories) =>
-          prevSubcategories.filter((item) => item !== value)
+          prevSubcategories.filter((item) => item !== value),
         );
         break;
 
@@ -104,12 +105,15 @@ const Filter: FC = () => {
       >
         Фильтры
       </Button>
-      <Collapse sx={{
-        maxHeight: menuOpen ? 'auto' : 0,
-        maxWidth: menuOpen ? 'auto' : 0,
-        overflow: 'hidden',
-        transition: 'height 0.3s ease-in-out, width 0.3s ease-in-out',
-      }} in={menuOpen}>
+      <Collapse
+        sx={{
+          maxHeight: menuOpen ? 'auto' : 0,
+          maxWidth: menuOpen ? 'auto' : 0,
+          overflow: 'hidden',
+          transition: 'height 0.3s ease-in-out, width 0.3s ease-in-out',
+        }}
+        in={menuOpen}
+      >
         <FormControl sx={{ m: 1, width: 200 }}>
           <InputLabel
             sx={{ fontSize: '16px', fontWeight: 400, width: '100%' }}
@@ -130,10 +134,7 @@ const Filter: FC = () => {
             <MenuItem value={'Лента'}>Лента</MenuItem>
           </Select>
           <label style={{ display: 'flex', alignItems: 'center' }}>
-            <Checkbox
-              checked={selectAll}
-              onChange={handleSelectAll}
-            />
+            <Checkbox checked={selectAll} onChange={handleSelectAll} />
             Выбрать все ТК
           </label>
           <div>
