@@ -5,6 +5,7 @@ import chartLine from '@/assets/icon/ChartLine.svg';
 import chartScatter from '@/assets/icon/chart-scatter1.svg';
 import fileText from '@/assets/icon/file-text.svg';
 import trello from '@/assets/icon/trello.svg';
+import search from '@/assets/icon/search.svg';
 import './navigation.css';
 import { NavLink, useLocation } from 'react-router-dom';
 
@@ -17,6 +18,16 @@ const OpenComponent: React.FC<ComponentProps> = ({ toggleMenu }) => {
 
   return (
     <div className="open">
+      <div className="open__avatar">
+        <div className="open__img">
+          <p>В</p>
+        </div>
+        <div className="open__text">
+          <p>Вася Пупкин</p>
+          <p>Категорийный менеджер</p>
+          <p>ТК 123-456</p>
+        </div>
+      </div>
       <div className="open__menu">
         <button onClick={toggleMenu} className="open__menu-button">
           <img src={trendingUp} alt="Menu Icon" />
@@ -69,6 +80,10 @@ const OpenComponent: React.FC<ComponentProps> = ({ toggleMenu }) => {
             Библиотека
           </NavLink>
         </nav>
+      </div>
+      <div className="open__input">
+        <input type="text" placeholder="Поиск" />
+        <img src={search} alt="Icon" />
       </div>
     </div>
   );
@@ -134,7 +149,7 @@ const Navigation: FC = () => {
   };
 
   return (
-    <div>
+    <div className="menu">
       {menuOpen ? (
         <OpenComponent toggleMenu={toggleMenu} />
       ) : (

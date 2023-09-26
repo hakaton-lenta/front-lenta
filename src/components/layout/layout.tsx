@@ -9,9 +9,11 @@ export const Layout: FC = () => {
   return (
     <div className="layout">
       <Header />
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: 'flex' }}>
         <Navigation />
-        <Filter />
+        <div>
+          <Filter />
+        </div>
       </div>
       <Outlet />
     </div>
