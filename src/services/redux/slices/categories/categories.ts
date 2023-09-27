@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchCategory } from './categoriesAPI';
 
-interface IProduct {
+export interface IProduct {
   sku: string;
   group: string;
   category: string;
@@ -29,7 +29,7 @@ const initialState: CategoriesState = {
   data: [],
 };
 
-const categoriesSlice = createSlice({
+export const categoriesSlice = createSlice({
   name: '@@category',
   initialState,
   reducers: {},
@@ -40,4 +40,6 @@ const categoriesSlice = createSlice({
   },
 });
 
-export default categoriesSlice.reducer;
+export const categoriesReduser = categoriesSlice.reducer;
+
+export const categoriesSelect = (state: { category: CategoriesState }) => state.category.data;
