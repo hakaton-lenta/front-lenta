@@ -8,17 +8,69 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
+import { useAppSelector } from '../../services/typeHooks';
+import { categoriesSelect } from '../../services/redux/slices/categories/categories';
+import { shopSelect } from '../../services/redux/slices/shop/shop';
+import { IProduct } from '../../services/redux/slices/categories/categories';
 
 import './filter.css';
 
 const Filter: FC = () => {
+  const categories = useAppSelector(categoriesSelect);
+  const shops = useAppSelector(shopSelect);
   const [menuOpen, setMenuOpen] = useState(true);
   const [tk, setTk] = React.useState<string[]>([]);
   const [group, setGroup] = React.useState<string[]>([]);
   const [category, setCategory] = React.useState<string[]>([]);
   const [subcategories, setSubcategories] = React.useState<string[]>([]);
+  const [sku, setSku] = React.useState<string[]>([]);
   const [period, setPeriod] = React.useState('');
   const [selectAll, setSelectAll] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const getCategoriesForGroup = (
+    groupSelect: string[],
+    categoriesData: IProduct[],
+  ) => {
+    const filteredCategories = categoriesData
+      .filter((item) => groupSelect.includes(item.group))
+      .map((item) => item.category);
+
+    return Array.from(new Set(filteredCategories));
+  };
+
+  const getSubcategoriesForCategory = (
+    categorySelect: string[],
+    categoriesData: IProduct[],
+  ) => {
+    const filteredSubcategories = categoriesData
+      .filter((item) => categorySelect.includes(item.category))
+      .map((item) => item.subcategory);
+
+    return Array.from(new Set(filteredSubcategories));
+  };
+
+  const getSkuForSubcategory = (
+    subcategorySelect: string[],
+    categoriesData: IProduct[],
+  ) => {
+    const filteredSku = categoriesData
+      .filter((item) => subcategorySelect.includes(item.subcategory))
+      .map((item) => item.sku);
+
+    return Array.from(new Set(filteredSku));
+  };
+
+  const categoriesForSelectedGroup = getCategoriesForGroup(group, categories);
+  const subcategoriesForSelectedCategory = getSubcategoriesForCategory(
+    category,
+    categories,
+  );
+  const skuForSelectedSubcategory = getSkuForSubcategory(
+    subcategories,
+    categories,
+  );
 
   const handleChangeTk = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
@@ -52,6 +104,14 @@ const Filter: FC = () => {
     }
   };
 
+  const handleChangeSku = (event: SelectChangeEvent) => {
+    const newValue = event.target.value as string;
+
+    if (!sku.includes(newValue)) {
+      setSku((prevSku) => [...prevSku, newValue]);
+    }
+  };
+
   const handleChangePeriod = (event: SelectChangeEvent) => {
     setPeriod(event.target.value as string);
   };
@@ -60,11 +120,15 @@ const Filter: FC = () => {
     setSelectAll(event.target.checked);
 
     if (event.target.checked) {
-      const allTkValues = ['Магнит', 'Пятерочка', 'Лента'];
+      const allTkValues = shops.map((item) => item.store);
       setTk(allTkValues);
     } else {
       setTk([]);
     }
+  };
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(event.target.value);
   };
 
   const handleRemoveChip = (field: string, value: string) => {
@@ -84,6 +148,9 @@ const Filter: FC = () => {
         setSubcategories((prevSubcategories) =>
           prevSubcategories.filter((item) => item !== value),
         );
+        break;
+      case 'sku':
+        setSku((prevSku) => prevSku.filter((item) => item !== value));
         break;
 
       default:
@@ -129,9 +196,9 @@ const Filter: FC = () => {
             label="Код ТК"
             onChange={handleChangeTk}
           >
-            <MenuItem value={'Магнит'}>Магнит</MenuItem>
-            <MenuItem value={'Пятерочка'}>Пятерочка</MenuItem>
-            <MenuItem value={'Лента'}>Лента</MenuItem>
+            {shops.map((item) => (
+              <MenuItem value={item.store}>{item.store}</MenuItem>
+            ))}
           </Select>
           <label style={{ display: 'flex', alignItems: 'center' }}>
             <Checkbox checked={selectAll} onChange={handleSelectAll} />
@@ -162,9 +229,9 @@ const Filter: FC = () => {
             label="Группа товаров"
             onChange={handleChangeGroup}
           >
-            <MenuItem value={'Группа А'}>Группа А</MenuItem>
-            <MenuItem value={'Группа Б'}>Группа Б</MenuItem>
-            <MenuItem value={'Группа C'}>Группа С</MenuItem>
+            {categories.map((item) => (
+              <MenuItem value={item.group}>{item.group}</MenuItem>
+            ))}
           </Select>
           <div>
             {group.map((value) => (
@@ -191,9 +258,9 @@ const Filter: FC = () => {
             label="Категория товаров"
             onChange={handleChangeCategory}
           >
-            <MenuItem value={'Категория А'}>Категория А</MenuItem>
-            <MenuItem value={'Категория Б'}>Категория Б</MenuItem>
-            <MenuItem value={'Категория С'}>Категория С</MenuItem>
+            {categoriesForSelectedGroup.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
           </Select>
           <div>
             {category.map((value) => (
@@ -220,9 +287,9 @@ const Filter: FC = () => {
             label="Подкатегория товаров"
             onChange={handleChangeSubcategories}
           >
-            <MenuItem value={'Подкатегория А'}>Подкатегория А</MenuItem>
-            <MenuItem value={'Подкатегория Б'}>Подкатегория Б</MenuItem>
-            <MenuItem value={'Подкатегория C'}>Подкатегория С</MenuItem>
+            {subcategoriesForSelectedCategory.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
           </Select>
           <div>
             {subcategories.map((value) => (
@@ -234,6 +301,37 @@ const Filter: FC = () => {
             ))}
           </div>
         </FormControl>
+
+        <FormControl sx={{ m: 1, width: 200 }}>
+          <InputLabel
+            sx={{ fontSize: '16px', fontWeight: 400, width: '100%' }}
+            id="select-label-1"
+          >
+            Товар
+          </InputLabel>
+          <Select
+            sx={{ width: 200, marginRight: 2.5 }}
+            labelId="select-label-6"
+            id="select-6"
+            value={sku[sku.length - 1]}
+            label="Товар"
+            onChange={handleChangeSku}
+          >
+            {skuForSelectedSubcategory.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
+          </Select>
+          <div>
+            {sku.map((value) => (
+              <Chip
+                key={value}
+                label={value}
+                onDelete={() => handleRemoveChip('sku', value)}
+              />
+            ))}
+          </div>
+        </FormControl>
+
         <FormControl sx={{ m: 1, width: 200 }}>
           <InputLabel
             sx={{ fontSize: '16px', fontWeight: 400, width: '100%' }}
@@ -253,6 +351,19 @@ const Filter: FC = () => {
             <MenuItem value={20}>10</MenuItem>
             <MenuItem value={30}>14</MenuItem>
           </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, width: 200 }}>
+          <TextField
+            id="date"
+            label="Выберите дату"
+            type="date"
+            value={selectedDate}
+            onChange={handleDateChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <p>Выбранная дата: {selectedDate}</p>
         </FormControl>
         <Button
           sx={{

@@ -17,6 +17,6 @@ const fetchData = (url: string) => {
   }).then((res) => checkRes(res));
 };
 
-export const fetchCategory = () => {
-  return fetchData(`${API_BASE_URL}/categories/`);
+export const fetchShop = () => {
+  return fetchData(`${API_BASE_URL}/shops/`);
 };
