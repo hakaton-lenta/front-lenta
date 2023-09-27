@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchShop } from './shopAPI';
 
 export interface IShop {
-    store: string,
-    city: string,
-    division: string,
-    type_format: number,
-    loc: number,
-    size: number,
-    is_active: boolean
+  store: string;
+  city: string;
+  division: string;
+  type_format: number;
+  loc: number;
+  size: number;
+  is_active: boolean;
 }
 
 interface IShopState {

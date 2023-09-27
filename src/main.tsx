@@ -15,7 +15,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getCategoryApi());
     dispatch(getShopApi());
-  }, [])
+  }, []);
 
   return (
     <section className="page">

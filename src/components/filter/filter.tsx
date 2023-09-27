@@ -29,33 +29,48 @@ const Filter: FC = () => {
   const [selectAll, setSelectAll] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
 
-  const getCategoriesForGroup = (groupSelect: string[], categoriesData: IProduct[]) => {
+  const getCategoriesForGroup = (
+    groupSelect: string[],
+    categoriesData: IProduct[],
+  ) => {
     const filteredCategories = categoriesData
-      .filter(item => groupSelect.includes(item.group))
-      .map(item => item.category);
+      .filter((item) => groupSelect.includes(item.group))
+      .map((item) => item.category);
 
     return Array.from(new Set(filteredCategories));
   };
 
-  const getSubcategoriesForCategory = (categorySelect: string[], categoriesData: IProduct[]) => {
+  const getSubcategoriesForCategory = (
+    categorySelect: string[],
+    categoriesData: IProduct[],
+  ) => {
     const filteredSubcategories = categoriesData
-      .filter(item => categorySelect.includes(item.category))
-      .map(item => item.subcategory);
+      .filter((item) => categorySelect.includes(item.category))
+      .map((item) => item.subcategory);
 
     return Array.from(new Set(filteredSubcategories));
   };
 
-  const getSkuForSubcategory = (subcategorySelect: string[], categoriesData: IProduct[]) => {
+  const getSkuForSubcategory = (
+    subcategorySelect: string[],
+    categoriesData: IProduct[],
+  ) => {
     const filteredSku = categoriesData
-      .filter(item => subcategorySelect.includes(item.subcategory))
-      .map(item => item.sku);
+      .filter((item) => subcategorySelect.includes(item.subcategory))
+      .map((item) => item.sku);
 
     return Array.from(new Set(filteredSku));
   };
 
   const categoriesForSelectedGroup = getCategoriesForGroup(group, categories);
-  const subcategoriesForSelectedCategory = getSubcategoriesForCategory(category, categories);
-  const skuForSelectedSubcategory = getSkuForSubcategory(subcategories, categories);
+  const subcategoriesForSelectedCategory = getSubcategoriesForCategory(
+    category,
+    categories,
+  );
+  const skuForSelectedSubcategory = getSkuForSubcategory(
+    subcategories,
+    categories,
+  );
 
   const handleChangeTk = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
@@ -135,9 +150,7 @@ const Filter: FC = () => {
         );
         break;
       case 'sku':
-        setSku((prevSku) =>
-          prevSku.filter((item) => item !== value),
-        );
+        setSku((prevSku) => prevSku.filter((item) => item !== value));
         break;
 
       default:
@@ -182,11 +195,10 @@ const Filter: FC = () => {
             value={tk[tk.length - 1]}
             label="Код ТК"
             onChange={handleChangeTk}
-          >{
-            shops.map((item) => (
+          >
+            {shops.map((item) => (
               <MenuItem value={item.store}>{item.store}</MenuItem>
-            ))
-          }
+            ))}
           </Select>
           <label style={{ display: 'flex', alignItems: 'center' }}>
             <Checkbox checked={selectAll} onChange={handleSelectAll} />
@@ -216,9 +228,10 @@ const Filter: FC = () => {
             value={group[group.length - 1]}
             label="Группа товаров"
             onChange={handleChangeGroup}
-          >{categories.map((item) => (
-            <MenuItem value={item.group}>{item.group}</MenuItem>
-          ))}
+          >
+            {categories.map((item) => (
+              <MenuItem value={item.group}>{item.group}</MenuItem>
+            ))}
           </Select>
           <div>
             {group.map((value) => (
@@ -244,9 +257,10 @@ const Filter: FC = () => {
             value={category[category.length - 1]}
             label="Категория товаров"
             onChange={handleChangeCategory}
-          >{categoriesForSelectedGroup.map(item => (
-            <MenuItem value={item}>{item}</MenuItem>
-          ))}
+          >
+            {categoriesForSelectedGroup.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
           </Select>
           <div>
             {category.map((value) => (
@@ -272,9 +286,10 @@ const Filter: FC = () => {
             value={subcategories[subcategories.length - 1]}
             label="Подкатегория товаров"
             onChange={handleChangeSubcategories}
-          >{subcategoriesForSelectedCategory.map(item => (
-            <MenuItem value={item}>{item}</MenuItem>
-          ))}
+          >
+            {subcategoriesForSelectedCategory.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
           </Select>
           <div>
             {subcategories.map((value) => (
@@ -286,7 +301,6 @@ const Filter: FC = () => {
             ))}
           </div>
         </FormControl>
-
 
         <FormControl sx={{ m: 1, width: 200 }}>
           <InputLabel
@@ -302,9 +316,10 @@ const Filter: FC = () => {
             value={sku[sku.length - 1]}
             label="Товар"
             onChange={handleChangeSku}
-          >{skuForSelectedSubcategory.map(item => (
-            <MenuItem value={item}>{item}</MenuItem>
-          ))}
+          >
+            {skuForSelectedSubcategory.map((item) => (
+              <MenuItem value={item}>{item}</MenuItem>
+            ))}
           </Select>
           <div>
             {sku.map((value) => (
@@ -316,7 +331,6 @@ const Filter: FC = () => {
             ))}
           </div>
         </FormControl>
-
 
         <FormControl sx={{ m: 1, width: 200 }}>
           <InputLabel
