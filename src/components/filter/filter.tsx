@@ -9,6 +9,8 @@ import FormControl from '@mui/material/FormControl';
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import search from '@/assets/icon/search.svg';
 import { useAppSelector } from '../../services/typeHooks';
 import { categoriesSelect } from '../../services/redux/slices/categories/categories';
 import { shopSelect } from '../../services/redux/slices/shop/shop';
@@ -164,20 +166,28 @@ const Filter: FC = () => {
 
   return (
     <div className="filter">
-      <Button
-        sx={{ color: 'black' }}
-        className="filter__button"
-        onClick={toggleMenu}
-        endIcon={<ExpandMoreIcon />}
-      >
-        Фильтры
-      </Button>
+      <Box sx={{display: 'flex', justifyContent: 'space-between', p: '12px 12px', m: 0,}}>
+        <Button
+          sx={{ color: 'black' }}
+          className="filter__button"
+          onClick={toggleMenu}
+          endIcon={<ExpandMoreIcon />}
+        >
+          Фильтры
+        </Button>
+        <Box sx={{display: 'flex', backgroundColor: '#F0F0F0', borderRadius: '24px', padding: '5px 16px'}}>
+          <img src={search} alt="Icon" />
+          <input style={{border: 'none', backgroundColor: 'transparent', width: '650px', outline: 'none', fontSize: '16px', fontWeight: '400', lineHeight: '20ox'}} type="text" placeholder="Поиск" />
+          <button style={{border: 'none', borderLeft: '1px solid #CDCDCD', cursor: 'pointer', fontSize: '16px', fontWeight: '400', lineHeight: '20ox'}}>Найти</button>
+        </Box>
+      </Box>
       <Collapse
         sx={{
           maxHeight: menuOpen ? 'auto' : 0,
-          maxWidth: menuOpen ? 'auto' : 0,
+          maxWidth: menuOpen ? 'auto' : '100%',
           overflow: 'hidden',
           transition: 'height 0.3s ease-in-out, width 0.3s ease-in-out',
+          position: 'relative'
         }}
         in={menuOpen}
       >
@@ -195,6 +205,7 @@ const Filter: FC = () => {
             value={tk[tk.length - 1]}
             label="Код ТК"
             onChange={handleChangeTk}
+            displayEmpty
           >
             {shops.map((item) => (
               <MenuItem value={item.store}>{item.store}</MenuItem>

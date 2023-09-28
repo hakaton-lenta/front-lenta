@@ -18,5 +18,5 @@ const fetchData = (url: string) => {
 };
 
 export const fetchCategory = () => {
-  return fetchData(`${API_BASE_URL}/categories/`);
+  return fetchData(`${API_BASE_URL}/products/`);
 };
