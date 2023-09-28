@@ -18,24 +18,24 @@
   flex-direction: row;
   padding-top: 16px;
   padding-bottom: 16px;
-  border-top: 1px solid #CDCDCD;
-  border-bottom: 1px solid #CDCDCD;
+  border-top: 1px solid #cdcdcd;
+  border-bottom: 1px solid #cdcdcd;
 }
 
 .open__img {
   width: 48px;
   height: 48px;
-  background-color: #CDCDCD;
+  background-color: #cdcdcd;
   margin-right: 8px;
 }
 
-.open__text>p {
+.open__text > p {
   margin: 0;
   font-size: 16px;
   line-height: 140%;
 }
 
-.open__text>p:first-child {
+.open__text > p:first-child {
   font-weight: 500;
 }
 
@@ -48,7 +48,7 @@
   padding: 6px 12px;
 }
 
-.open__input>input {
+.open__input > input {
   outline: none;
   border: none;
   background-color: transparent;
@@ -72,11 +72,11 @@
   background-color: transparent;
 }
 
-.open__menu-button>img {
+.open__menu-button > img {
   margin: auto 0;
 }
 
-.open__menu-button>span {
+.open__menu-button > span {
   margin: 6px 16px;
 }
 
@@ -85,7 +85,8 @@
   flex-direction: column;
 }
 
-.open__nav>a>img {}
+.open__nav > a > img {
+}
 
 .open__menu-link {
   display: flex;
@@ -109,7 +110,7 @@
   opacity: 0.5;
 }
 
-.open__menu-link>img {
+.open__menu-link > img {
   margin-right: 12px;
 }
 
@@ -122,7 +123,8 @@
   margin: 12px 12px;
 }
 
-.close__menu {}
+.close__menu {
+}
 
 .close__menu-button {
   border: none;
@@ -147,12 +149,12 @@
 }
 
 .close__avatar {
-  border-top: 1px solid #CDCDCD;
-  border-bottom: 1px solid #CDCDCD;
+  border-top: 1px solid #cdcdcd;
+  border-bottom: 1px solid #cdcdcd;
 }
 
 .close__img {
   width: 24px;
   height: 24px;
-  background-color: #CDCDCD;
+  background-color: #cdcdcd;
 }

@@ -166,7 +166,14 @@ const Filter: FC = () => {
 
   return (
     <div className="filter">
-      <Box sx={{display: 'flex', justifyContent: 'space-between', p: '12px 12px', m: 0,}}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          p: '12px 12px',
+          m: 0,
+        }}
+      >
         <Button
           sx={{ color: 'black' }}
           className="filter__button"
@@ -175,10 +182,40 @@ const Filter: FC = () => {
         >
           Фильтры
         </Button>
-        <Box sx={{display: 'flex', backgroundColor: '#F0F0F0', borderRadius: '24px', padding: '5px 16px'}}>
+        <Box
+          sx={{
+            display: 'flex',
+            backgroundColor: '#F0F0F0',
+            borderRadius: '24px',
+            padding: '5px 16px',
+          }}
+        >
           <img src={search} alt="Icon" />
-          <input style={{border: 'none', backgroundColor: 'transparent', width: '650px', outline: 'none', fontSize: '16px', fontWeight: '400', lineHeight: '20ox'}} type="text" placeholder="Поиск" />
-          <button style={{border: 'none', borderLeft: '1px solid #CDCDCD', cursor: 'pointer', fontSize: '16px', fontWeight: '400', lineHeight: '20ox'}}>Найти</button>
+          <input
+            style={{
+              border: 'none',
+              backgroundColor: 'transparent',
+              width: '650px',
+              outline: 'none',
+              fontSize: '16px',
+              fontWeight: '400',
+              lineHeight: '20ox',
+            }}
+            type="text"
+            placeholder="Поиск"
+          />
+          <button
+            style={{
+              border: 'none',
+              borderLeft: '1px solid #CDCDCD',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '400',
+              lineHeight: '20ox',
+            }}
+          >
+            Найти
+          </button>
         </Box>
       </Box>
       <Collapse
@@ -187,7 +224,7 @@ const Filter: FC = () => {
           maxWidth: menuOpen ? 'auto' : '100%',
           overflow: 'hidden',
           transition: 'height 0.3s ease-in-out, width 0.3s ease-in-out',
-          position: 'relative'
+          position: 'relative',
         }}
         in={menuOpen}
       >
