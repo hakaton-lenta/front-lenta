@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
+import './index.css';
 import { Layout } from './pages/layout/layout';
 import { Provider } from 'react-redux';
 import { store } from './services/redux/store';

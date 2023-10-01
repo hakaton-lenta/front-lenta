@@ -1,11 +1,11 @@
-.link{
-    color: #003C96;
-    text-decoration: none;
-    &:active{
-        text-decoration: underline;
-    }
-    &:focus-visible {
-        outline: none;
-        text-decoration: underline;
-    }
+.link {
+  color: #003c96;
+  text-decoration: none;
+  &:active {
+    text-decoration: underline;
+  }
+  &:focus-visible {
+    outline: none;
+    text-decoration: underline;
+  }
 }

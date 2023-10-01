@@ -36,7 +36,7 @@ const Header = () => {
               <img className={styles.icon} src={profileicon} alt="" />
               <div className={styles.details}>
                 sasmeo@gmail.com
-                <br/>
+                <br />
                 TK-125444
               </div>
             </div>
@@ -57,7 +57,6 @@ const Header = () => {
             <button>Выйти</button>
           </Link>
         )} */}
-
       </div>
     </div>
   );
