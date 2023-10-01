@@ -1,13 +1,9 @@
 .filter {
-  margin: 12px;
+  border-left: 1px solid #858585;
+  border-right: 1px solid #858585;
+  padding: 40px 24px;
   background-color: white;
   border-radius: 4px;
-  height: auto;
-  width: auto;
-  overflow: hidden;
-  transition:
-    height 0.3s ease-in-out,
-    width 0.3s ease-in-out;
 }
 
 .filter__button {
