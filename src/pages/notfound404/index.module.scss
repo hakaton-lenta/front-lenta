@@ -1,0 +1,51 @@
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 90px);
+}
+
+.blockund {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    margin-top: 280px;
+    margin-bottom: 60px;
+}
+
+.text {
+    color: #2C2A29;
+    text-align: center;
+    font-family: Futura PT;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 450;
+    line-height: 48px;
+    margin: 32px 0 88px 0;
+}
+
+.link {
+    color: #003C96;
+    font-family: Futura PT;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    cursor: pointer;
+    display: flex;
+    width: 256px;
+    height: 46px;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    border: 1px solid #003C96;
+    text-decoration: none;
+
+    :hover {
+        color: #8585AD;
+    }
+}
