@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import { Layout } from './components/layout/layout';
+import { Layout } from './page/layout/layout';
 import { Provider } from 'react-redux';
 import { store } from './services/redux/store';
 import { useAppDispatch } from './services/typeHooks';
