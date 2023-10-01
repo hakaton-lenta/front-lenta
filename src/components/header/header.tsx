@@ -48,6 +48,16 @@ const Header = () => {
         ) : (
           ''
         )}
+        {/* {loggedIn ? (
+          <Link className="header__login" to="#">
+            <button>Войти</button>
+          </Link>
+        ) : (
+          <Link className="header__logout" to="#">
+            <button>Выйти</button>
+          </Link>
+        )} */}
+
       </div>
     </div>
   );

@@ -12,6 +12,8 @@ import { ROUTE_HOME, ROUTE_LOGIN, ROUTE_REGISTER } from './utils/constants';
 import LoginPage from './pages/login';
 import NotFound404 from './pages/notfound404';
 import RegisterPage from './pages/register';
+import Forecast from './page/forecast/forecast';
+import Statistics from './page/statistics/statistics';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +29,8 @@ const App = () => {
         <Route path={ROUTE_HOME} element={<Layout />}></Route>
         <Route path={ROUTE_LOGIN} element={<LoginPage />}></Route>
         <Route path={ROUTE_REGISTER} element={<RegisterPage />}></Route>
+        <Route path="/forecast" element={<Forecast />} />
+        <Route path="/statistics" element={<Statistics />} />
         <Route path="*" element={<NotFound404 />}></Route>
       </Routes>
     </section>
