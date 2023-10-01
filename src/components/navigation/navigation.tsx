@@ -21,36 +21,40 @@ const OpenComponent: React.FC = () => {
   return (
     <div className="open">
       <div className="open__menu">
-        <h2 className='open__menu-span'>Аналитика</h2>
+        <h2 className="open__menu-span">Аналитика</h2>
         <nav className="open__nav">
           <NavLink
             to="/"
-            className={`open__menu-link ${location.pathname === '/' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/' ? 'open__menu-active' : ''
+            }`}
           >
             <img className="open__nav-img" src={trello} alt="Icon 1" />
             Планер
           </NavLink>
           <NavLink
             to="/forecast"
-            className={`open__menu-link ${location.pathname === '/forecast' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/forecast' ? 'open__menu-active' : ''
+            }`}
           >
             <img className="open__nav-img" src={chartScatter} alt="Icon 1" />
             Прогноз
           </NavLink>
           <NavLink
             to="/statistics"
-            className={`open__menu-link ${location.pathname === '/statistics' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/statistics' ? 'open__menu-active' : ''
+            }`}
           >
             <img className="open__nav-img" src={chartLine} alt="Icon 1" />
             Статистика
           </NavLink>
           <NavLink
             to="/reports"
-            className={`open__menu-link ${location.pathname === '/reports' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/reports' ? 'open__menu-active' : ''
+            }`}
             style={{ pointerEvents: 'none', opacity: 0.5 }}
           >
             <img className="open__nav-img" src={fileText} alt="Icon 1" />
@@ -58,8 +62,9 @@ const OpenComponent: React.FC = () => {
           </NavLink>
           <NavLink
             to="/library"
-            className={`open__menu-link ${location.pathname === '/library' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/library' ? 'open__menu-active' : ''
+            }`}
             style={{ pointerEvents: 'none', opacity: 0.5 }}
           >
             <img className="open__nav-img" src={bookOpen} alt="Icon 1" />
@@ -71,10 +76,10 @@ const OpenComponent: React.FC = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          margin: '16px 24px'
+          margin: '16px 24px',
         }}
       >
-        <img style={{width:'32px'}} src={gear} alt="gear" />
+        <img style={{ width: '32px' }} src={gear} alt="gear" />
         <span>Настройки</span>
       </div>
     </div>

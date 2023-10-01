@@ -23,8 +23,8 @@ const App = () => {
     <section className="page">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path='/forecast' element={<Forecast />} />
-          <Route path='/statistics' element={<Statistics />} />
+          <Route path="/forecast" element={<Forecast />} />
+          <Route path="/statistics" element={<Statistics />} />
         </Route>
       </Routes>
     </section>

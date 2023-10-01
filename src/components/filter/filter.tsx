@@ -11,7 +11,15 @@ import { categoriesSelect } from '../../services/redux/slices/categories/categor
 import { shopSelect } from '../../services/redux/slices/shop/shop';
 import { IProduct } from '../../services/redux/slices/categories/categories';
 import { useNavigate } from 'react-router-dom';
-import { setTk, setGroup, setCategory, setSubcategories, setSku, setPeriod, setSelectedDate } from '../../services/redux/slices/filter/filter';
+import {
+  setTk,
+  setGroup,
+  setCategory,
+  setSubcategories,
+  setSku,
+  setPeriod,
+  setSelectedDate,
+} from '../../services/redux/slices/filter/filter';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
 
 import './filter.css';
@@ -20,15 +28,15 @@ const Filter: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const categoriesState = useAppSelector(categoriesSelect);
-  const uniqueGroups = [...new Set(categoriesState.map(item => item.group))];
+  const uniqueGroups = [...new Set(categoriesState.map((item) => item.group))];
   const shops = useAppSelector(shopSelect);
-  const tk = useAppSelector(state => state.filter.tk)
-  const group = useAppSelector(state => state.filter.group)
-  const category = useAppSelector(state => state.filter.category)
-  const subcategories = useAppSelector(state => state.filter.subcategories)
-  const sku = useAppSelector(state => state.filter.sku)
-  const period = useAppSelector(state => state.filter.period)
-  const selectedDate = useAppSelector(state => state.filter.selectedDate)
+  const tk = useAppSelector((state) => state.filter.tk);
+  const group = useAppSelector((state) => state.filter.group);
+  const category = useAppSelector((state) => state.filter.category);
+  const subcategories = useAppSelector((state) => state.filter.subcategories);
+  const sku = useAppSelector((state) => state.filter.sku);
+  const period = useAppSelector((state) => state.filter.period);
+  const selectedDate = useAppSelector((state) => state.filter.selectedDate);
 
   const getCategoriesForGroup = (
     groupSelect: string[],
@@ -63,7 +71,10 @@ const Filter: FC = () => {
     return Array.from(new Set(filteredSku));
   };
 
-  const categoriesForSelectedGroup = getCategoriesForGroup(group, categoriesState);
+  const categoriesForSelectedGroup = getCategoriesForGroup(
+    group,
+    categoriesState,
+  );
   const subcategoriesForSelectedCategory = getSubcategoriesForCategory(
     category,
     categoriesState,
@@ -144,13 +155,22 @@ const Filter: FC = () => {
 
   return (
     <div className="filter">
-      <h3 style={{margin:'0 0 24px 0', fontSize:'24px', fontWeight:'500', lineHeight:'32px'}}>Фильтры</h3>
+      <h3
+        style={{
+          margin: '0 0 24px 0',
+          fontSize: '24px',
+          fontWeight: '500',
+          lineHeight: '32px',
+        }}
+      >
+        Фильтры
+      </h3>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap:'16px',
-          width:'265px'
+          gap: '16px',
+          width: '265px',
         }}
       >
         <FormControl>
@@ -161,7 +181,12 @@ const Filter: FC = () => {
             Код ТК
           </InputLabel>
           <Select
-            sx={{ width: '100%', marginRight: 2.5, color: 'black', borderRadius: '40px' }}
+            sx={{
+              width: '100%',
+              marginRight: 2.5,
+              color: 'black',
+              borderRadius: '40px',
+            }}
             labelId="select-label-1"
             id="select-1"
             value={tk[tk.length - 1] || ''}
@@ -170,11 +195,16 @@ const Filter: FC = () => {
             displayEmpty
           >
             {shops.map((item, index) => (
-              <MenuItem key={index} value={item.store}>{item.store}</MenuItem>
+              <MenuItem key={index} value={item.store}>
+                {item.store}
+              </MenuItem>
             ))}
           </Select>
           <label style={{ display: 'flex', alignItems: 'center' }}>
-            <Checkbox checked={tk.length === shops.length} onChange={handleSelectAll} />
+            <Checkbox
+              checked={tk.length === shops.length}
+              onChange={handleSelectAll}
+            />
             Выбрать все ТК
           </label>
         </FormControl>
@@ -194,7 +224,9 @@ const Filter: FC = () => {
             onChange={handleChangeGroup}
           >
             {uniqueGroups.map((item, index) => (
-              <MenuItem key={index} value={item}>{item}</MenuItem>
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -214,7 +246,9 @@ const Filter: FC = () => {
             onChange={handleChangeCategory}
           >
             {categoriesForSelectedGroup.map((item, index) => (
-              <MenuItem key={index} value={item}>{item}</MenuItem>
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -234,7 +268,9 @@ const Filter: FC = () => {
             onChange={handleChangeSubcategories}
           >
             {subcategoriesForSelectedCategory.map((item, index) => (
-              <MenuItem key={index} value={item}>{item}</MenuItem>
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -254,7 +290,9 @@ const Filter: FC = () => {
             onChange={handleChangeSku}
           >
             {skuForSelectedSubcategory.map((item, index) => (
-              <MenuItem key={index} value={item}>{item}</MenuItem>
+              <MenuItem key={index} value={item}>
+                {item}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -291,7 +329,8 @@ const Filter: FC = () => {
             sx={{
               '& .MuiInputBase-root': {
                 borderRadius: '40px',
-              }}}
+              },
+            }}
           />
         </FormControl>
         <Button
@@ -302,7 +341,7 @@ const Filter: FC = () => {
             fontSize: '16px',
             fontWeight: '400',
             height: '56px',
-            mt:'40px',
+            mt: '40px',
             '&:hover': {
               backgroundColor: 'rgba(25, 118, 210, 0.9)',
             },

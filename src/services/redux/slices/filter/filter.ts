@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IFilter {
-  tk: string[],
-  group: string[],
-  category: string[],
-  subcategories: string[],
-  sku: string[],
-  period: string,
-  selectedDate: string,
+  tk: string[];
+  group: string[];
+  category: string[];
+  subcategories: string[];
+  sku: string[];
+  period: string;
+  selectedDate: string;
 }
 
 const initialState: IFilter = {
