@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import { Layout } from './page/layout/layout';
+import { Layout } from './pages/layout/layout';
 import { Provider } from 'react-redux';
 import { store } from './services/redux/store';
 import { useAppDispatch } from './services/typeHooks';
@@ -12,8 +12,8 @@ import { ROUTE_HOME, ROUTE_LOGIN, ROUTE_REGISTER } from './utils/constants';
 import LoginPage from './pages/login';
 import NotFound404 from './pages/notfound404';
 import RegisterPage from './pages/register';
-import Forecast from './page/forecast/forecast';
-import Statistics from './page/statistics/statistics';
+import Forecast from './pages/forecast/forecast';
+import Statistics from './pages/statistics/statistics';
 
 const App = () => {
   const dispatch = useAppDispatch();
