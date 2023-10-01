@@ -1,0 +1,68 @@
+@import url('https://fonts.cdnfonts.com/css/futura-pt');
+
+body {
+  font-family: 'Futura PT';
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  background-color: #f0f0f0;
+  height: 100vh;
+}
+
+.mb-16{
+  margin-bottom: 16px;
+}
+
+.mb-40{
+  margin-bottom: 40px;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.title{
+  color: #2C2A29;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 48px;
+  text-align: center;
+  margin: 80px 0 72px 0;
+}
+
+.loginForm {
+  max-width: 458px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+  align-items: center;
+  margin-top: 76px;
+  border: 1px solid #CDCDCD;
+  border-radius: 12px;
+}
+
+.loginFormInner{
+  padding: 40px 40px 20px 40px;
+
+  h4{
+      color: #2C2A29;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%;
+      margin: 0 0 12px 0;
+      text-align: center;
+  }
+  .title{
+      color: #2C2A29;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 18px;
+      margin: 0 0 4px 0;
+      text-align: left;
+  }
+}

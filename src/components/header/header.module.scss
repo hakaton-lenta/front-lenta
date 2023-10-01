@@ -1,0 +1,59 @@
+.header {
+  background-color: #001e64;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 44px;
+  padding-right: 44px;
+}
+
+.header__login > button {
+  background-color: #aa2332;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  padding: 12px 58px;
+  cursor: pointer;
+  transition: all .2s ease-in;
+
+  &:hover {
+    background-color: #db3a4d;
+  }
+}
+
+.header__logout {
+  background-color: transparent;
+  display: flex;
+  height: 48px;
+  padding: 12px 16px;
+  align-items: center;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  border-radius: 24px;
+  border: 1px solid #FFF;
+  transition: all .2s ease-in;
+
+  &:hover {
+    background-color: #db3a4d;
+  }
+}
+
+.profgroup{
+  display: flex;
+  align-items: center;
+}
+.profile{
+  display: flex;
+  height: 48px;
+  padding: 12px 32px 12px 16px;
+  align-items: center; 
+}
+.icon{
+  border-radius: 50%;
+}
+.details{
+  color: #fff;
+  padding: 0 0 0 7px;
+}
