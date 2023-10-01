@@ -11,20 +11,20 @@ body {
   height: 100vh;
 }
 
-.mb-16{
+.mb-16 {
   margin-bottom: 16px;
 }
 
-.mb-40{
+.mb-40 {
   margin-bottom: 40px;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
-.title{
-  color: #2C2A29;
+.title {
+  color: #2c2a29;
   font-size: 36px;
   font-style: normal;
   font-weight: 500;
@@ -40,29 +40,29 @@ body {
   padding: 0;
   align-items: center;
   margin-top: 76px;
-  border: 1px solid #CDCDCD;
+  border: 1px solid #cdcdcd;
   border-radius: 12px;
 }
 
-.loginFormInner{
+.loginFormInner {
   padding: 40px 40px 20px 40px;
 
-  h4{
-      color: #2C2A29;
-      font-size: 24px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 140%;
-      margin: 0 0 12px 0;
-      text-align: center;
+  h4 {
+    color: #2c2a29;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+    margin: 0 0 12px 0;
+    text-align: center;
   }
-  .title{
-      color: #2C2A29;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 18px;
-      margin: 0 0 4px 0;
-      text-align: left;
+  .title {
+    color: #2c2a29;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0 0 4px 0;
+    text-align: left;
   }
 }

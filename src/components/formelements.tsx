@@ -95,8 +95,7 @@ export const LogOutButton = styled(InputBase)(({ theme }) => ({
       'box-shadow',
     ]),
     fontFamily: ['Futura PT'].join(','),
-    '&:focus': {
-    },
+    '&:focus': {},
   },
 }));
 
