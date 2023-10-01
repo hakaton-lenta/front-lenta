@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Header from '../header/header';
-import Navigation from '../navigation/navigation';
-import Filter from '../filter/filter';
+import Header from '../../components/header/header';
+import Navigation from '../../components/navigation/navigation';
+import Filter from '../../components/filter/filter';
 
 export const Layout: FC = () => {
   return (
@@ -11,11 +11,9 @@ export const Layout: FC = () => {
       <Header />
       <div style={{ display: 'flex' }}>
         <Navigation />
-        <div>
-          <Filter />
-        </div>
+        <Filter />
+        <Outlet />
       </div>
-      <Outlet />
     </div>
   );
 };
