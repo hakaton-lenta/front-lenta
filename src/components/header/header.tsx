@@ -6,37 +6,22 @@ import { RootState } from '../../services/redux/store';
 import { useNavigate } from 'react-router-dom';
 import { EXIT, ROUTE_LOGIN } from '../../utils/constants';
 import {
-  getProfileUser,
   logoutUser,
 } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const Header = () => {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.user.isLoggedIn,
   );
+  const mail = useAppSelector(
+    (state: RootState) => state.user.user?.email,
+  );
   const access = localStorage.getItem('accessToken') ?? '';
-  const [mail, setMail] = useState('');
+  // const [isLogin, setError] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const loadProfile = () => {
-    // try {
-      if (access !== '')
-        dispatch(getProfileUser({ access })).then((resultAction) => {
-          if (getProfileUser.fulfilled.match(resultAction)) {
-            setMail(resultAction.payload.email);
-          } else {
-            // navigate(ROUTE_LOGIN);
-          }
-        });
-    // } catch (e) {}
-  };
-
-  useEffect(() => {
-    loadProfile();
-  }, []);
 
   const handleLogout = () => {
     dispatch(logoutUser({ access })).then((resultAction) => {

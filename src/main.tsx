@@ -14,17 +14,18 @@ import NotFound404 from './pages/notfound404';
 import RegisterPage from './pages/register';
 import Forecast from './pages/forecast/forecast';
 import Statistics from './pages/statistics/statistics';
+import Loader from './components/loader';
+import { getProfileUser } from './services/redux/slices/auth/auth';
 
 const RequireAuth = ({
   children: children,
   onlyAuth: onlyAuth,
+  isLoggedIn: isLoggedIn,
 }: {
   children: JSX.Element;
   onlyAuth: boolean;
+  isLoggedIn: boolean;
 }) => {
-  const isLoggedIn = useAppSelector(
-    (state: RootState) => state.user.isLoggedIn,
-  );
   if (onlyAuth === true)
     return isLoggedIn === true ? (
       children
@@ -41,19 +42,31 @@ const RequireAuth = ({
 
 const App = () => {
   const dispatch = useAppDispatch();
-
+  const isLoading = useAppSelector((state: RootState) => state.user.isLoading);
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.user.isLoggedIn,
+  );
+  const access = localStorage.getItem('accessToken') ?? '';
   useEffect(() => {
+    if (access !== '') dispatch(getProfileUser({ access }));
     dispatch(getCategoryApi());
     dispatch(getShopApi());
   }, []);
 
+  if (isLoading) {
+    return (
+      <section className="page">
+        <Loader />
+      </section>
+    );
+  }
   return (
     <section className="page">
       <Routes>
         <Route
           path={ROUTE_HOME}
           element={
-            <RequireAuth onlyAuth={true}>
+            <RequireAuth onlyAuth={true} isLoggedIn={isLoggedIn}>
               <Layout />
             </RequireAuth>
           }
@@ -64,7 +77,7 @@ const App = () => {
         <Route
           path={ROUTE_LOGIN}
           element={
-            <RequireAuth onlyAuth={false}>
+            <RequireAuth onlyAuth={false} isLoggedIn={isLoggedIn}>
               <LoginPage />
             </RequireAuth>
           }
@@ -72,7 +85,7 @@ const App = () => {
         <Route
           path={ROUTE_REGISTER}
           element={
-            <RequireAuth onlyAuth={false}>
+            <RequireAuth onlyAuth={false} isLoggedIn={isLoggedIn}>
               <RegisterPage />
             </RequireAuth>
           }
