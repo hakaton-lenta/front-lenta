@@ -2,26 +2,47 @@ import styles from './header.module.scss';
 import logo from '../../assets/icon/logo-ru.wide.svg';
 import profileicon from '../../assets/icon/defaultprofile.png';
 import signout from '../../assets/icon/SignOut.svg';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../services/redux/store';
 import { useNavigate } from 'react-router-dom';
 import { EXIT, ROUTE_LOGIN } from '../../utils/constants';
-import { logoutUser } from '../../services/redux/slices/auth/auth';
-import { useAppDispatch } from '../../services/typeHooks';
+import {
+  getProfileUser,
+  logoutUser,
+} from '../../services/redux/slices/auth/auth';
+import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
-  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state.user.isLoggedIn,
+  );
   const access = localStorage.getItem('accessToken') ?? '';
+  const [mail, setMail] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const loadProfile = () => {
+    // try {
+      if (access !== '')
+        dispatch(getProfileUser({ access })).then((resultAction) => {
+          if (getProfileUser.fulfilled.match(resultAction)) {
+            setMail(resultAction.payload.email);
+          } else {
+            // navigate(ROUTE_LOGIN);
+          }
+        });
+    // } catch (e) {}
+  };
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
+
   const handleLogout = () => {
     dispatch(logoutUser({ access })).then((resultAction) => {
       if (logoutUser.fulfilled.match(resultAction)) {
-        // После успешного входа, пользователь будет перенаправлен на главную страницу
         navigate(ROUTE_LOGIN);
       } else {
-        // Если вход не успешный, устанавливаем состояние ошибки
-        // setError3('Неверный email или пароль. Пожалуйста, попробуйте снова.');
       }
     });
   };
@@ -35,9 +56,9 @@ const Header = () => {
             <div className={styles.profile}>
               <img className={styles.icon} src={profileicon} alt="" />
               <div className={styles.details}>
-                sasmeo@gmail.com
+                {mail}
                 <br />
-                TK-125444
+                &nbsp;
               </div>
             </div>
             <button className={styles.header__logout} onClick={handleLogout}>

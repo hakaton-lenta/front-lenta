@@ -10,6 +10,8 @@ import {
   ENTER_TO_SYSTEM,
   PASSWORD,
   ROUTE_HOME,
+  ROUTE_REGISTER,
+  ROUTE_TECH_SUPPORT,
   TECH_SUPPORT,
   TITLE,
   TO_REGISTRATION,
@@ -141,12 +143,12 @@ const LoginPage = () => {
               {ENTER}
             </LoginButton>
             <p className="text-center">
-              <Link className={styles.link} to="/register">
+              <Link className={styles.link} to={ROUTE_REGISTER}>
                 {TO_REGISTRATION}
               </Link>
             </p>
             <p className="text-center">
-              <Link className={styles.link} to="/404">
+              <Link className={styles.link} to={ROUTE_TECH_SUPPORT}>
                 {TECH_SUPPORT}
               </Link>
             </p>

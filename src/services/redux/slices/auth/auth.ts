@@ -55,7 +55,7 @@ export const getProfileUser = createAsyncThunk(
       const response = await getuser(payload.access);
       return fulfillWithValue(response);
     } catch (error: unknown) {
-      return rejectWithValue({ error: 'Failed to logout' }); // Возвращаем объект с ошибкой
+      return rejectWithValue({ error: 'Failed to get user' }); // Возвращаем объект с ошибкой
     }
   },
 );
@@ -136,6 +136,18 @@ const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+      })
+      .addCase(getProfileUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProfileUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isLoggedIn = true;
+        state.user = action.payload;
+      })
+      .addCase(getProfileUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       });
   },
 });
@@ -148,3 +160,5 @@ export const selectLoggedIn = (state: { auth: IAuthState }) =>
 export const selectLoading = (state: { auth: IAuthState }) =>
   state.auth.isLoading;
 export const selectError = (state: { auth: IAuthState }) => state.auth.error;
+
+export const getToken = (state: { auth: IAuthState }) => state.auth.user?.accessToken;
