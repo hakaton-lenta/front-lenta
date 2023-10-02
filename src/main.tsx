@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
@@ -15,29 +15,23 @@ import RegisterPage from './pages/register';
 import Forecast from './pages/forecast/forecast';
 import Statistics from './pages/statistics/statistics';
 import Loader from './components/loader';
-import { getProfileUser } from './services/redux/slices/auth/auth';
+import { getProfileUser, logoutUser } from './services/redux/slices/auth/auth';
 
 const RequireAuth = ({
   children: children,
   onlyAuth: onlyAuth,
   isLoggedIn: isLoggedIn,
+  isLoading: isLoading,
 }: {
   children: JSX.Element;
   onlyAuth: boolean;
   isLoggedIn: boolean;
+  isLoading: boolean;
 }) => {
-  if (onlyAuth === true)
-    return isLoggedIn === true ? (
-      children
-    ) : (
-      <Navigate to={ROUTE_LOGIN} replace />
-    );
-  else
-    return isLoggedIn === false ? (
-      children
-    ) : (
-      <Navigate to={ROUTE_HOME} replace />
-    );
+  if (isLoading === false)
+    if (onlyAuth === true)
+      return isLoggedIn === true ? children : <Navigate to={ROUTE_LOGIN} />;
+    else return isLoggedIn === false ? children : <Navigate to={ROUTE_HOME} />;
 };
 
 const App = () => {
@@ -48,11 +42,15 @@ const App = () => {
   );
   const access = localStorage.getItem('accessToken') ?? '';
   useEffect(() => {
-    if (access !== '') dispatch(getProfileUser({ access }));
-    dispatch(getCategoryApi());
-    dispatch(getShopApi());
+    if (access.length !== 0) {
+      dispatch(getProfileUser({ access }));
+      dispatch(getCategoryApi());
+      dispatch(getShopApi());
+    }else{
+      dispatch(logoutUser({ access }));
+      <Navigate to={ROUTE_LOGIN} />
+    }
   }, []);
-
   if (isLoading) {
     return (
       <section className="page">
@@ -66,7 +64,11 @@ const App = () => {
         <Route
           path={ROUTE_HOME}
           element={
-            <RequireAuth onlyAuth={true} isLoggedIn={isLoggedIn}>
+            <RequireAuth
+              onlyAuth={true}
+              isLoggedIn={isLoggedIn}
+              isLoading={isLoading}
+            >
               <Layout />
             </RequireAuth>
           }
@@ -77,7 +79,11 @@ const App = () => {
         <Route
           path={ROUTE_LOGIN}
           element={
-            <RequireAuth onlyAuth={false} isLoggedIn={isLoggedIn}>
+            <RequireAuth
+              onlyAuth={false}
+              isLoggedIn={isLoggedIn}
+              isLoading={isLoading}
+            >
               <LoginPage />
             </RequireAuth>
           }
@@ -85,7 +91,11 @@ const App = () => {
         <Route
           path={ROUTE_REGISTER}
           element={
-            <RequireAuth onlyAuth={false} isLoggedIn={isLoggedIn}>
+            <RequireAuth
+              onlyAuth={false}
+              isLoggedIn={isLoggedIn}
+              isLoading={isLoading}
+            >
               <RegisterPage />
             </RequireAuth>
           }
@@ -99,11 +109,9 @@ const App = () => {
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
+  <BrowserRouter>
+      <Provider store={store}>
         <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+      </Provider>
+  </BrowserRouter>
 );

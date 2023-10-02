@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { login, logout, getuser, register } from './authAPI';
 
@@ -70,19 +69,15 @@ export const registerUser = createAsyncThunk(
       const response = await register(payload.email, payload.password);
       return fulfillWithValue(response);
     } catch (err: unknown) {
-      const axiosError = err as AxiosError; // Приводим ошибку к типу AxiosError
-      if (axiosError.response) {
-        return rejectWithValue(axiosError.response.data);
-      } else {
-        throw err;
-      }
+      console.log(err);
+      return rejectWithValue({ error: 'Failed to register user' }); // Возвращаем объект с ошибкой
     }
   },
 );
 
 const initialState: IAuthState = {
   user: null,
-  isLoading: false,
+  isLoading: true,
   isLoggedIn: false,
   error: null,
 };
@@ -94,7 +89,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
-        state.isLoading = true;
+        // state.isLoading = true;
         state.isLoggedIn = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -127,14 +122,15 @@ const authSlice = createSlice({
         state.error = action.error.message as string;
       })
       .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
+        // state.isLoading = true;
+        console.log(state);
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
+        // state.isLoading = false;
         state.user = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.isLoading = false;
+        // state.isLoading = false;
         state.error = action.payload as string;
       })
       .addCase(getProfileUser.pending, (state) => {

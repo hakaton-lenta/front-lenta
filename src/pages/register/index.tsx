@@ -20,23 +20,6 @@ import {
 } from '../../utils/constants';
 import { registerUser } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch } from '../../services/typeHooks';
-// import { useNavigate } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
-
-// const registerSchema = object({
-//   //   name: string()
-//   // .nonempty('Name is required')
-//   // .max(32, 'Name must be less than 100 characters'),
-//   email: string().nonempty('Email is required').email('Email is invalid'),
-//   password: string()
-//     .nonempty('Password is required')
-//     .min(8, 'Password must be more than 8 characters')
-//     .max(32, 'Password must be less than 32 characters'),
-//   passwordConfirm: string().nonempty('Please confirm your password'),
-// }).refine((data) => data.password === data.passwordConfirm, {
-//   path: ['passwordConfirm'],
-//   message: 'Passwords do not match',
-// });
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
@@ -68,7 +51,6 @@ const RegisterPage = () => {
   };
   const register = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const navigate = useNavigate();
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
@@ -103,6 +85,7 @@ const RegisterPage = () => {
         setPasswordConfirm('');
       } else {
         setError4('Ошибка регистрации');
+        return;
       }
     });
     // reset();

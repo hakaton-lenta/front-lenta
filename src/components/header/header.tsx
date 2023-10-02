@@ -9,7 +9,6 @@ import {
   logoutUser,
 } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
-import { useEffect } from 'react';
 
 const Header = () => {
   const isLoggedIn = useAppSelector(
@@ -19,7 +18,6 @@ const Header = () => {
     (state: RootState) => state.user.user?.email,
   );
   const access = localStorage.getItem('accessToken') ?? '';
-  // const [isLogin, setError] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -31,6 +29,7 @@ const Header = () => {
       }
     });
   };
+
   return (
     <div className={styles.header}>
       <img src={logo} alt="" />

@@ -16,7 +16,7 @@ import {
   TITLE,
   TO_REGISTRATION,
 } from '../../utils/constants';
-import { loginUser } from '../../services/redux/slices/auth/auth';
+import { getProfileUser, loginUser } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch } from '../../services/typeHooks';
 import {
   ErrorLabel,
@@ -73,6 +73,8 @@ const LoginPage = () => {
         // После успешного входа, пользователь будет перенаправлен на главную страницу
         setEmail('');
         setPassword('');
+        const access = localStorage.getItem('accessToken') ?? '';
+        dispatch(getProfileUser({ access }));
         navigate(ROUTE_HOME);
       } else {
         // Если вход не успешный, устанавливаем состояние ошибки
