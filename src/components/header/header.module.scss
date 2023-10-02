@@ -35,8 +35,17 @@
   border: 1px solid #fff;
   transition: all 0.2s ease-in;
 
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5);
+  }
   &:hover {
-    background-color: #db3a4d;
+    background-color: #0048B5;
+    border-color: #0048B5;
+    box-shadow: none;
+  }
+  &:active {
+    background-color: #0062cc;
+    border-color: #005cbf;
   }
 }
 

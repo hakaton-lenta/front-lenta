@@ -15,8 +15,8 @@ export const LoginButton = styled(Button)({
   borderColor: '#003C96',
   fontFamily: ['Futura PT'].join(','),
   '&:hover': {
-    backgroundColor: '#0069d9',
-    borderColor: '#0062cc',
+    backgroundColor: '#0048B5',
+    borderColor: '#0048B5',
     boxShadow: 'none',
   },
   '&:active': {
