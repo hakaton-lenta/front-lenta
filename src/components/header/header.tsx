@@ -9,7 +9,6 @@ import {
   logoutUser,
 } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
-import { useEffect } from 'react';
 
 const Header = () => {
   const isLoggedIn = useAppSelector(

@@ -5,7 +5,13 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  base: '/front-lenta',
+  plugins: [
+    react({
+      include: '**/*.tsx',
+    }),
+    svgr(),
+  ],
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
