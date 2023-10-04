@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import Button from '@mui/material/Button';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
@@ -23,6 +22,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
 
 import './filter.css';
+import { LoginButton } from '../formelements';
 
 const Filter: FC = () => {
   const dispatch = useAppDispatch();
@@ -333,7 +333,7 @@ const Filter: FC = () => {
             }}
           />
         </FormControl>
-        <Button
+        {/* <Button
           sx={{
             width: 'auto',
             backgroundColor: '#001E64',
@@ -349,7 +349,10 @@ const Filter: FC = () => {
           onClick={handleClick}
         >
           Найти
-        </Button>
+        </Button> */}
+        <LoginButton fullWidth type="button" onClick={handleClick} variant="contained" sx={{ mt: 3 }}>
+          Найти
+        </LoginButton>
       </Box>
     </div>
   );

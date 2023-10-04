@@ -1,6 +1,11 @@
-import { Box, FormControl, FormHelperText } from '@mui/material';
-import { SetStateAction, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  SnackbarContent,
+} from '@mui/material';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 import {
   ErrorLabel,
@@ -15,14 +20,21 @@ import {
   PASSWORD,
   REGISTRATION,
   REPEAT_PASSWORD,
+  ROUTE_LOGIN,
   TECH_SUPPORT,
   TITLE,
 } from '../../utils/constants';
+import { Snackbar } from '@mui/material';
 import { registerUser } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch } from '../../services/typeHooks';
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [secondsRemaining, setSecondsRemaining] = useState(5);
+  const intervalId = useRef<number | undefined>();
+  const timeoutId = useRef<number | undefined>();
   const [emailС, setEmail] = useState('');
   const [passwordС, setPassword] = useState('');
   const [passwordConfirmС, setPasswordConfirm] = useState('');
@@ -32,6 +44,12 @@ const RegisterPage = () => {
   const [error3, setError3] = useState('');
   const [error4, setError4] = useState('');
   const [lsuccess, setSuccess] = useState('');
+
+  const handleSnackbarClose = () => {
+    setOpen(false);
+    navigate(ROUTE_LOGIN);
+  };
+
   const handleEmailChange = (e: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -79,10 +97,22 @@ const RegisterPage = () => {
     }
     dispatch(registerUser({ email, password })).then((resultAction) => {
       if (registerUser.fulfilled.match(resultAction)) {
-        setSuccess('Регистрация прошла успешно');
+        // setSuccess('Регистрация прошла успешно');
         setEmail('');
         setPassword('');
         setPasswordConfirm('');
+
+        setOpen(true);
+        setSecondsRemaining(5);
+        // Уменьшаем значение каждую секунду
+        intervalId.current = window.setInterval(() => {
+          setSecondsRemaining((prevSeconds) => prevSeconds - 1);
+        }, 1000);
+
+        timeoutId.current = window.setTimeout(() => {
+          clearInterval(intervalId.current);
+          handleSnackbarClose();
+        }, 5000);
       } else {
         setError4('Ошибка регистрации');
         return;
@@ -94,6 +124,14 @@ const RegisterPage = () => {
     //   setError('Ошибка регистрации');
     // }
   };
+
+  useEffect(() => {
+    return () => {
+      if (intervalId.current) {
+        clearInterval(intervalId.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="layout white">
@@ -213,6 +251,21 @@ const RegisterPage = () => {
                 {TECH_SUPPORT}
               </Link>
             </p>
+            <Snackbar
+              open={open}
+              autoHideDuration={5000}
+              onClose={handleSnackbarClose}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+              <SnackbarContent
+                style={{
+                  backgroundColor: '#00BE64',
+                }}
+                message={
+                  <span id="client-snackbar">{`Регистрация прошла успешно. Вы будете перенаправлены на страницу авторизации через ${secondsRemaining} сек.`}</span>
+                }
+              />
+            </Snackbar>
           </form>
         </div>
       </div>
