@@ -21,6 +21,7 @@ import {
   setSelectedDate,
 } from '../../services/redux/slices/filter/filter';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
+import { getSaleApi } from '../../services/redux/slices/sale/sale';
 
 import './filter.css';
 
@@ -149,8 +150,26 @@ const Filter: FC = () => {
     dispatch(setSelectedDate(newValue));
   };
 
+
+  // Обработка кнопки поиска
+
   const handleClick = () => {
+    const token = localStorage.getItem('accessToken') ?? '';
+
+    const skuId = categoriesState
+      .filter(item => sku.includes(item.sku))
+      .map(item => item.id);
+  
+    const storeId = shops
+      .filter(item => tk.includes(item.store))
+      .map(item => item.id);
+
+    dispatch(getSaleApi({ skuId, date: selectedDate, storeId, time: period, token }));
     navigate('/forecast');
+    console.log(skuId)
+    console.log(selectedDate)
+    console.log(storeId)
+    console.log(period)
   };
 
   return (
@@ -307,7 +326,7 @@ const Filter: FC = () => {
             sx={{ width: '265px', marginRight: 2.5, borderRadius: '40px' }}
             labelId="select-label-5"
             id="select-5"
-            value={period || ''}
+            value={period}
             label="Период прогнозирования"
             onChange={handleChangePeriod}
           >

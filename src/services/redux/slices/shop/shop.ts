@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchShop } from './shopAPI';
 
 export interface IShop {
+  id: number
   store: string;
   city: string;
   division: string;
