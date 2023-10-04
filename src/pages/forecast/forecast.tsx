@@ -70,7 +70,7 @@ const Forecast = () => {
   return (
     <div className="forecast" style={{ margin: '40px 24px', width: '100vw' }}>
       <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
+        sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '42px' }}
       >
         <Typography
           sx={{ fontSize: '32px', fontWeight: '500', lineHeight: '42px' }}
