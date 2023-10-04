@@ -17,7 +17,10 @@ import {
   TITLE,
   TO_REGISTRATION,
 } from '../../utils/constants';
-import { getProfileUser, loginUser } from '../../services/redux/slices/auth/auth';
+import {
+  getProfileUser,
+  loginUser,
+} from '../../services/redux/slices/auth/auth';
 import { useAppDispatch } from '../../services/typeHooks';
 import {
   ErrorLabel,

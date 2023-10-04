@@ -5,18 +5,14 @@ import signout from '../../assets/icon/SignOut.svg';
 import { RootState } from '../../services/redux/store';
 import { useNavigate } from 'react-router-dom';
 import { EXIT, ROUTE_LOGIN } from '../../utils/constants';
-import {
-  logoutUser,
-} from '../../services/redux/slices/auth/auth';
+import { logoutUser } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
 
 const Header = () => {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.user.isLoggedIn,
   );
-  const mail = useAppSelector(
-    (state: RootState) => state.user.user?.email,
-  );
+  const mail = useAppSelector((state: RootState) => state.user.user?.email);
   const access = localStorage.getItem('accessToken') ?? '';
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

@@ -157,4 +157,5 @@ export const selectLoading = (state: { auth: IAuthState }) =>
   state.auth.isLoading;
 export const selectError = (state: { auth: IAuthState }) => state.auth.error;
 
-export const getToken = (state: { auth: IAuthState }) => state.auth.user?.accessToken;
+export const getToken = (state: { auth: IAuthState }) =>
+  state.auth.user?.accessToken;
