@@ -150,26 +150,27 @@ const Filter: FC = () => {
     dispatch(setSelectedDate(newValue));
   };
 
-
   // Обработка кнопки поиска
 
   const handleClick = () => {
     const token = localStorage.getItem('accessToken') ?? '';
 
     const skuId = categoriesState
-      .filter(item => sku.includes(item.sku))
-      .map(item => item.id);
-  
-    const storeId = shops
-      .filter(item => tk.includes(item.store))
-      .map(item => item.id);
+      .filter((item) => sku.includes(item.sku))
+      .map((item) => item.id);
 
-    dispatch(getSaleApi({ skuId, date: selectedDate, storeId, time: period, token }));
+    const storeId = shops
+      .filter((item) => tk.includes(item.store))
+      .map((item) => item.id);
+
+    dispatch(
+      getSaleApi({ skuId, date: selectedDate, storeId, time: period, token }),
+    );
     navigate('/forecast');
-    console.log(skuId)
-    console.log(selectedDate)
-    console.log(storeId)
-    console.log(period)
+    console.log(skuId);
+    console.log(selectedDate);
+    console.log(storeId);
+    console.log(period);
   };
 
   return (

@@ -2,20 +2,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchSale } from './saleAPI';
 
 interface ISaleData {
-  date: string
-  pr_sales_in_units: number
+  date: string;
+  pr_sales_in_units: number;
 }
 
 interface ISaleProduct {
-  id: number
-  pr_sku_id: string
-  sales: ISaleData[]
+  id: number;
+  pr_sku_id: string;
+  sales: ISaleData[];
 }
 
 interface ISaleStore {
-  id: number
-  st_id: string
-  goods: ISaleProduct[]
+  id: number;
+  st_id: string;
+  goods: ISaleProduct[];
 }
 
 interface SaleState {
@@ -24,7 +24,16 @@ interface SaleState {
 
 export const getSaleApi = createAsyncThunk(
   '@@sale/sale',
-  async (arg: { skuId: number[], date: string, storeId: number[], time: string, token: string }, { fulfillWithValue, rejectWithValue }) => {
+  async (
+    arg: {
+      skuId: number[];
+      date: string;
+      storeId: number[];
+      time: string;
+      token: string;
+    },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
       const { skuId, date, storeId, time, token } = arg;
       const response = await fetchSale(skuId, date, storeId, time, token);
@@ -52,5 +61,4 @@ export const saleSlice = createSlice({
 
 export const saleReduser = saleSlice.reducer;
 
-export const saleSelect = (state: { sale: SaleState }) =>
-  state.sale.data;
+export const saleSelect = (state: { sale: SaleState }) => state.sale.data;

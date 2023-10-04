@@ -8,7 +8,7 @@ const checkRes = (res: Response) => {
   }
 };
 
-const fetchData = (url: string, token: string ) => {
+const fetchData = (url: string, token: string) => {
   return fetch(url, {
     method: 'GET',
     headers: {
@@ -18,8 +18,17 @@ const fetchData = (url: string, token: string ) => {
   }).then((res) => checkRes(res));
 };
 
-export const fetchSale = ( skuId: number[], date: string, storeId: number[], time: string, token: string ) => {
+export const fetchSale = (
+  skuId: number[],
+  date: string,
+  storeId: number[],
+  time: string,
+  token: string,
+) => {
   const skuIdStr = skuId.join(',');
   const storeIdStr = storeId.join(',');
-  return fetchData(`${API_BASE_URL}/sales/store_product_period?sku=${skuIdStr}&start_date=${date}&store=${storeIdStr}&time_delta=${time}'`, token);
+  return fetchData(
+    `${API_BASE_URL}/sales/store_product_period?sku=${skuIdStr}&start_date=${date}&store=${storeIdStr}&time_delta=${time}'`,
+    token,
+  );
 };

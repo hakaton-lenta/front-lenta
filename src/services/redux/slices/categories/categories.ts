@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchCategory } from './categoriesAPI';
 
 export interface IProduct {
-  id: number
+  id: number;
   sku: string;
   group: string;
   category: string;

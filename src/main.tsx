@@ -46,9 +46,9 @@ const App = () => {
       dispatch(getProfileUser({ access }));
       dispatch(getCategoryApi());
       dispatch(getShopApi());
-    }else{
+    } else {
       dispatch(logoutUser({ access }));
-      <Navigate to={ROUTE_LOGIN} />
+      <Navigate to={ROUTE_LOGIN} />;
     }
   }, []);
   if (isLoading) {
@@ -110,8 +110,8 @@ const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 root.render(
   <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-  </BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
 );
