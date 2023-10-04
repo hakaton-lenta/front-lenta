@@ -16,6 +16,7 @@ import Forecast from './pages/forecast/forecast';
 import Statistics from './pages/statistics/statistics';
 import Loader from './components/loader';
 import { getProfileUser, logoutUser } from './services/redux/slices/auth/auth';
+import Planer from './pages/planer/planer';
 
 const RequireAuth = ({
   children: children,
@@ -73,6 +74,7 @@ const App = () => {
             </RequireAuth>
           }
         >
+          <Route path="/" element={<Planer />} />
           <Route path="/forecast" element={<Forecast />} />
           <Route path="/statistics" element={<Statistics />} />
         </Route>

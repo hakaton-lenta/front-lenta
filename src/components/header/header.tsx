@@ -45,7 +45,7 @@ const Header = () => {
                 &nbsp;
               </div>
             </div>
-            <button className={styles.header__logout} onClick={handleLogout}>
+            <button className={styles.logout} onClick={handleLogout}>
               <img src={signout} alt="" />
               {EXIT}
             </button>
