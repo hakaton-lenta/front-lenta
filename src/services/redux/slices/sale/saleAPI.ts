@@ -28,7 +28,7 @@ export const fetchSale = (
   const skuIdStr = skuId.join(',');
   const storeIdStr = storeId.join(',');
   return fetchData(
-    `${API_BASE_URL}/sales/store_product_period?sku=${skuIdStr}&start_date=${date}&store=${storeIdStr}&time_delta=${time}'`,
+    `${API_BASE_URL}/sales/store_product_period?sku=${skuIdStr}&start_date=${date}&store=${storeIdStr}&time_delta=${time}`,
     token,
   );
 };
