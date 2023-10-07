@@ -35,6 +35,7 @@ import './filter.css';
 import { LoginButton } from '../formelements';
 import { getSkuApi, skuSelect } from '../../services/redux/slices/sku/sku';
 // import { Button } from '@mui/material';
+import { getPredictApi } from '../../services/redux/slices/predict/predict';
 
 const Filter: FC = () => {
   const dispatch = useAppDispatch();
@@ -180,6 +181,11 @@ const Filter: FC = () => {
         token,
       }),
     );
+    dispatch(getPredictApi({
+      skuId: sku.id,
+      storeId: tk.id,
+      token
+    }));
     navigate('/forecast');
   };
 
