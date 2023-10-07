@@ -1,21 +1,61 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+interface IFilterTk {
+  id: number
+  store: string
+}
+
+interface IFilterGroup {
+  id: number
+  groupId: string
+}
+
+interface IFilterCategories {
+  id: number
+  catId: string
+}
+
+interface IFilterSubcategories {
+  id: number
+  subcatId: string
+}
+
+interface ISku {
+  id: number
+  skuId: string
+}
+
 interface IFilter {
-  tk: string[];
-  group: string[];
-  category: string[];
-  subcategories: string[];
-  sku: string[];
+  tk: IFilterTk;
+  group: IFilterGroup;
+  category: IFilterCategories;
+  subcategory: IFilterSubcategories;
+  sku: ISku;
   period: string;
   selectedDate: string;
 }
 
 const initialState: IFilter = {
-  tk: [],
-  group: [],
-  category: [],
-  subcategories: [],
-  sku: [],
+  tk: {
+    id: 0,
+    store: ''
+  },
+  group: {
+    id: 0,
+    groupId: ''
+  },
+  category: {
+    id: 0,
+    catId: ''
+  },
+  subcategory: {
+    id: 0,
+    subcatId: ''
+  },
+  sku: {
+    id: 0,
+    skuId: ''
+  },
   period: '',
   selectedDate: '',
 };
@@ -33,8 +73,8 @@ const filterSlice = createSlice({
     setCategory: (state, action) => {
       state.category = action.payload;
     },
-    setSubcategories: (state, action) => {
-      state.subcategories = action.payload;
+    setSubcategory: (state, action) => {
+      state.subcategory = action.payload;
     },
     setSku: (state, action) => {
       state.sku = action.payload;
@@ -52,7 +92,7 @@ export const {
   setTk,
   setGroup,
   setCategory,
-  setSubcategories,
+  setSubcategory,
   setSku,
   setPeriod,
   setSelectedDate,

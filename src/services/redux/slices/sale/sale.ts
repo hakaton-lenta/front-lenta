@@ -26,9 +26,9 @@ export const getSaleApi = createAsyncThunk(
   '@@sale/sale',
   async (
     arg: {
-      skuId: number[];
+      skuId: number;
       date: string;
-      storeId: number[];
+      storeId: number;
       time: string;
       token: string;
     },

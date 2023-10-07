@@ -6,7 +6,6 @@ import { Layout } from './pages/layout/layout';
 import { Provider } from 'react-redux';
 import { RootState, store } from './services/redux/store';
 import { useAppDispatch, useAppSelector } from './services/typeHooks';
-import { getCategoryApi } from './services/redux/slices/categories/categories';
 import { getShopApi } from './services/redux/slices/shop/shop';
 import { ROUTE_HOME, ROUTE_LOGIN, ROUTE_REGISTER } from './utils/constants';
 import LoginPage from './pages/login';
@@ -45,7 +44,6 @@ const App = () => {
   useEffect(() => {
     if (access.length !== 0) {
       dispatch(getProfileUser({ access }));
-      dispatch(getCategoryApi());
       dispatch(getShopApi());
     } else {
       dispatch(logoutUser({ access }));
