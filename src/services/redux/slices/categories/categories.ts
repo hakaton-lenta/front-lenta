@@ -2,18 +2,18 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchCategories } from './categoriesAPI';
 
 interface IСategory {
-  id: number
-  cat_id: string
-  group_id: number
+  id: number;
+  cat_id: string;
+  group_id: number;
 }
 
 interface IСategories {
   id: number;
-  categories: IСategory[]
+  categories: IСategory[];
 }
 
 interface IСategoriesData {
-  groups: IСategories[]
+  groups: IСategories[];
 }
 
 interface IСategoriesState {
@@ -22,7 +22,10 @@ interface IСategoriesState {
 
 export const getСategoriesApi = createAsyncThunk(
   '@@categories/categories',
-  async (arg: { groupsId: number, storeId: number }, { fulfillWithValue, rejectWithValue }) => {
+  async (
+    arg: { groupsId: number; storeId: number },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
       const { groupsId, storeId } = arg;
       const response = await fetchCategories(groupsId, storeId);

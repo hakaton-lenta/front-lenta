@@ -2,14 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchGroups } from './groupsAPI';
 
 interface IGroups {
-  id: number
-  group_id: string
+  id: number;
+  group_id: string;
 }
 
 export interface IGroup {
   id: number;
-  st_id: string
-  groups: IGroups[]
+  st_id: string;
+  groups: IGroups[];
 }
 
 interface IGroupsState {

@@ -2,20 +2,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchSubcategories } from './subcategoriesAPI';
 
 interface ISubcategory {
-  id: number
-  subcat_id: string
-  cat_id: number
+  id: number;
+  subcat_id: string;
+  cat_id: number;
 }
 
 interface ISubcategories {
   id: number;
-  cat_id: string
-  group_id: number
-  subcategories: ISubcategory[]
+  cat_id: string;
+  group_id: number;
+  subcategories: ISubcategory[];
 }
 
 interface ISubcategoriesData {
-    categories: ISubcategories[]
+  categories: ISubcategories[];
 }
 
 interface ISubcategoriesState {
@@ -24,10 +24,17 @@ interface ISubcategoriesState {
 
 export const getSubcategoriesApi = createAsyncThunk(
   '@@subcategories/subcategories',
-  async (arg: { categoriesId: number, groupsId: number, storeId: number }, { fulfillWithValue, rejectWithValue }) => {
+  async (
+    arg: { categoriesId: number; groupsId: number; storeId: number },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
       const { categoriesId, groupsId, storeId } = arg;
-      const response = await fetchSubcategories(categoriesId, groupsId, storeId);
+      const response = await fetchSubcategories(
+        categoriesId,
+        groupsId,
+        storeId,
+      );
       return fulfillWithValue(response);
     } catch (error: unknown) {
       return rejectWithValue(error);
@@ -52,7 +59,10 @@ const subcategoriesSlice = createSlice({
 
 export const subcategoriesReduser = subcategoriesSlice.reducer;
 
-export const subcategoriesSelect = (state: { subcategories: ISubcategoriesState }) => {
-  const subcategoriesData = state.subcategories.data[0]?.categories[0]?.subcategories;
+export const subcategoriesSelect = (state: {
+  subcategories: ISubcategoriesState;
+}) => {
+  const subcategoriesData =
+    state.subcategories.data[0]?.categories[0]?.subcategories;
   return subcategoriesData ? subcategoriesData : [];
 };

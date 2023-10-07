@@ -18,5 +18,7 @@ const fetchData = (url: string) => {
 };
 
 export const fetchGroups = (storeId: number) => {
-  return fetchData(`${API_BASE_URL}/filters/groups_whith_sales/?store=${storeId}`);
+  return fetchData(
+    `${API_BASE_URL}/filters/groups_whith_sales/?store=${storeId}`,
+  );
 };

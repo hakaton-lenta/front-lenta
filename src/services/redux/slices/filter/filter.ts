@@ -1,28 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IFilterTk {
-  id: number
-  store: string
+  id: number;
+  store: string;
 }
 
 interface IFilterGroup {
-  id: number
-  groupId: string
+  id: number;
+  groupId: string;
 }
 
 interface IFilterCategories {
-  id: number
-  catId: string
+  id: number;
+  catId: string;
 }
 
 interface IFilterSubcategories {
-  id: number
-  subcatId: string
+  id: number;
+  subcatId: string;
 }
 
 interface ISku {
-  id: number
-  skuId: string
+  id: number;
+  skuId: string;
 }
 
 interface IFilter {
@@ -38,23 +38,23 @@ interface IFilter {
 const initialState: IFilter = {
   tk: {
     id: 0,
-    store: ''
+    store: '',
   },
   group: {
     id: 0,
-    groupId: ''
+    groupId: '',
   },
   category: {
     id: 0,
-    catId: ''
+    catId: '',
   },
   subcategory: {
     id: 0,
-    subcatId: ''
+    subcatId: '',
   },
   sku: {
     id: 0,
-    skuId: ''
+    skuId: '',
   },
   period: '',
   selectedDate: '',

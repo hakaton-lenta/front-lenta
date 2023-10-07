@@ -17,7 +17,7 @@ export const store = configureStore({
     groups: groupsReduser,
     categories: categoriesReduser,
     subcategories: subcategoriesReduser,
-    sku: skuReduser
+    sku: skuReduser,
   },
 });
 
