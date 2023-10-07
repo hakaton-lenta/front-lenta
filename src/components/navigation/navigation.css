@@ -86,11 +86,11 @@
   transition: all 0.2s ease-in;
 }
 .open__menu-link:hover {
-  opacity:0.8;
+  opacity: 0.8;
 }
 
 .open__menu-active {
-  background-color: #F3F3F3;
+  background-color: #f3f3f3;
 }
 
 .open__menu-link:active {

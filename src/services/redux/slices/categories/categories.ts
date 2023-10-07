@@ -1,24 +1,34 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchCategory } from './categoriesAPI';
+import { fetchCategories } from './categoriesAPI';
 
-export interface IProduct {
+interface IСategory {
   id: number;
-  sku: string;
-  group: string;
-  category: string;
-  subcategory: string;
-  uom: number;
+  cat_id: string;
+  group_id: number;
 }
 
-interface CategoriesState {
-  data: IProduct[];
+interface IСategories {
+  id: number;
+  categories: IСategory[];
 }
 
-export const getCategoryApi = createAsyncThunk(
-  '@@category/category',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+interface IСategoriesData {
+  groups: IСategories[];
+}
+
+interface IСategoriesState {
+  data: IСategoriesData[];
+}
+
+export const getСategoriesApi = createAsyncThunk(
+  '@@categories/categories',
+  async (
+    arg: { groupsId: number; storeId: number },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
-      const response = await fetchCategory();
+      const { groupsId, storeId } = arg;
+      const response = await fetchCategories(groupsId, storeId);
       return fulfillWithValue(response);
     } catch (error: unknown) {
       return rejectWithValue(error);
@@ -26,16 +36,16 @@ export const getCategoryApi = createAsyncThunk(
   },
 );
 
-const initialState: CategoriesState = {
+const initialState: IСategoriesState = {
   data: [],
 };
 
-export const categoriesSlice = createSlice({
-  name: '@@category',
+const categoriesSlice = createSlice({
+  name: '@@categories',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCategoryApi.fulfilled, (state, action) => {
+    builder.addCase(getСategoriesApi.fulfilled, (state, action) => {
       state.data = action.payload;
     });
   },
@@ -43,5 +53,7 @@ export const categoriesSlice = createSlice({
 
 export const categoriesReduser = categoriesSlice.reducer;
 
-export const categoriesSelect = (state: { category: CategoriesState }) =>
-  state.category.data;
+export const categoriesSelect = (state: { categories: IСategoriesState }) => {
+  const categoriesData = state.categories.data[0]?.groups[0]?.categories;
+  return categoriesData ? categoriesData : [];
+};

@@ -6,7 +6,7 @@ import {
   setTk,
   setGroup,
   setCategory,
-  setSubcategories,
+  setSubcategory,
   setSku,
   setPeriod,
   setSelectedDate,
@@ -18,29 +18,27 @@ const Planer = () => {
   const tk = useAppSelector((state) => state.filter.tk);
   const group = useAppSelector((state) => state.filter.group);
   const category = useAppSelector((state) => state.filter.category);
-  const subcategories = useAppSelector((state) => state.filter.subcategories);
+  const subcategory = useAppSelector((state) => state.filter.subcategory);
   const sku = useAppSelector((state) => state.filter.sku);
   const period = useAppSelector((state) => state.filter.period);
   const selectedDate = useAppSelector((state) => state.filter.selectedDate);
 
-  const handleRemoveChip = (field: string, value: string) => {
+  const handleRemoveChip = (field: string) => {
     switch (field) {
       case 'tk':
-        dispatch(setTk(tk.filter((item) => item !== value)));
+        dispatch(setTk({ id: 0, store: '' }));
         break;
       case 'group':
-        dispatch(setGroup(group.filter((item) => item !== value)));
+        dispatch(setGroup({ id: 0, groupId: '' }));
         break;
       case 'category':
-        dispatch(setCategory(category.filter((item) => item !== value)));
+        dispatch(setCategory({ id: 0, catId: '' }));
         break;
-      case 'subcategories':
-        dispatch(
-          setSubcategories(subcategories.filter((item) => item !== value)),
-        );
+      case 'subcategory':
+        dispatch(setSubcategory({ id: 0, subcatId: '' }));
         break;
       case 'sku':
-        dispatch(setSku(sku.filter((item) => item !== value)));
+        dispatch(setSku({ id: 0, skuId: '' }));
         break;
       case 'period':
         dispatch(setPeriod(''));
@@ -70,7 +68,12 @@ const Planer = () => {
   return (
     <div className="forecast" style={{ margin: '40px 24px', width: '100vw' }}>
       <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', height: '42px' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          height: '42px',
+        }}
       >
         <Typography
           sx={{ fontSize: '32px', fontWeight: '500', lineHeight: '42px' }}
@@ -116,61 +119,61 @@ const Planer = () => {
       </Box>
       <Box sx={{ mb: '32px', mt: '16px', display: 'flex', flexWrap: 'wrap' }}>
         <Box sx={boxStyle}>
-          {tk.map((value) => (
+          {tk.store && (
             <Chip
-              key={value}
-              label={value}
-              onDelete={() => handleRemoveChip('tk', value)}
+              key={tk.id}
+              label={tk.store}
+              onDelete={() => handleRemoveChip('tk')}
               sx={chipStyles}
             />
-          ))}
+          )}
         </Box>
         <Box>
-          {group.map((value) => (
+          {group.groupId && (
             <Chip
-              key={value}
-              label={value}
-              onDelete={() => handleRemoveChip('group', value)}
+              key={group.id}
+              label={group.groupId}
+              onDelete={() => handleRemoveChip('group')}
               sx={chipStyles}
             />
-          ))}
+          )}
         </Box>
         <Box>
-          {category.map((value) => (
+          {category.catId && (
             <Chip
-              key={value}
-              label={value}
-              onDelete={() => handleRemoveChip('category', value)}
+              key={category.id}
+              label={category.catId}
+              onDelete={() => handleRemoveChip('category')}
               sx={chipStyles}
             />
-          ))}
+          )}
         </Box>
         <Box>
-          {subcategories.map((value) => (
+          {subcategory.subcatId && (
             <Chip
-              key={value}
-              label={value}
-              onDelete={() => handleRemoveChip('subcategories', value)}
+              key={subcategory.id}
+              label={subcategory.subcatId}
+              onDelete={() => handleRemoveChip('subcategory')}
               sx={chipStyles}
             />
-          ))}
+          )}
         </Box>
         <Box>
-          {sku.map((value) => (
+          {sku.skuId && (
             <Chip
-              key={value}
-              label={value}
-              onDelete={() => handleRemoveChip('sku', value)}
+              key={sku.id}
+              label={sku.skuId}
+              onDelete={() => handleRemoveChip('sku')}
               sx={chipStyles}
             />
-          ))}
+          )}
         </Box>
         <Box>
           {period && (
             <Chip
               key={period}
               label={`${period} дней`}
-              onDelete={() => handleRemoveChip('period', period)}
+              onDelete={() => handleRemoveChip('period')}
               sx={chipStyles}
             />
           )}
@@ -180,7 +183,7 @@ const Planer = () => {
             <Chip
               key={selectedDate}
               label={`с ${selectedDate}`}
-              onDelete={() => handleRemoveChip('selectedDate', selectedDate)}
+              onDelete={() => handleRemoveChip('selectedDate')}
               sx={chipStyles}
             />
           )}

@@ -3,130 +3,146 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import Checkbox from '@mui/material/Checkbox';
+// import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { categoriesSelect } from '../../services/redux/slices/categories/categories';
 import { shopSelect } from '../../services/redux/slices/shop/shop';
-import { IProduct } from '../../services/redux/slices/categories/categories';
+import {
+  getСategoriesApi,
+  categoriesSelect,
+} from '../../services/redux/slices/categories/categories';
 import { useNavigate } from 'react-router-dom';
 import {
   setTk,
   setGroup,
   setCategory,
-  setSubcategories,
+  setSubcategory,
   setSku,
   setPeriod,
   setSelectedDate,
 } from '../../services/redux/slices/filter/filter';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
 import { getSaleApi } from '../../services/redux/slices/sale/sale';
-
+import {
+  getGroupsApi,
+  groupsSelect,
+} from '../../services/redux/slices/groups/groups';
+import {
+  getSubcategoriesApi,
+  subcategoriesSelect,
+} from '../../services/redux/slices/subcategories/subcategories';
 import './filter.css';
 import { LoginButton } from '../formelements';
+import { getSkuApi, skuSelect } from '../../services/redux/slices/sku/sku';
+// import { Button } from '@mui/material';
 
 const Filter: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const categoriesState = useAppSelector(categoriesSelect);
-  const uniqueGroups = [...new Set(categoriesState.map((item) => item.group))];
   const shops = useAppSelector(shopSelect);
+  const groups = useAppSelector(groupsSelect) || [];
+  const categories = useAppSelector(categoriesSelect) || [];
+  const subcategories = useAppSelector(subcategoriesSelect) || [];
+  const skuData = useAppSelector(skuSelect) || [];
   const tk = useAppSelector((state) => state.filter.tk);
   const group = useAppSelector((state) => state.filter.group);
   const category = useAppSelector((state) => state.filter.category);
-  const subcategories = useAppSelector((state) => state.filter.subcategories);
+  const subcategory = useAppSelector((state) => state.filter.subcategory);
   const sku = useAppSelector((state) => state.filter.sku);
   const period = useAppSelector((state) => state.filter.period);
   const selectedDate = useAppSelector((state) => state.filter.selectedDate);
 
-  const getCategoriesForGroup = (
-    groupSelect: string[],
-    categoriesData: IProduct[],
-  ) => {
-    const filteredCategories = categoriesData
-      .filter((item) => groupSelect.includes(item.group))
-      .map((item) => item.category);
-
-    return Array.from(new Set(filteredCategories));
-  };
-
-  const getSubcategoriesForCategory = (
-    categorySelect: string[],
-    categoriesData: IProduct[],
-  ) => {
-    const filteredSubcategories = categoriesData
-      .filter((item) => categorySelect.includes(item.category))
-      .map((item) => item.subcategory);
-
-    return Array.from(new Set(filteredSubcategories));
-  };
-
-  const getSkuForSubcategory = (
-    subcategorySelect: string[],
-    categoriesData: IProduct[],
-  ) => {
-    const filteredSku = categoriesData
-      .filter((item) => subcategorySelect.includes(item.subcategory))
-      .map((item) => item.sku);
-
-    return Array.from(new Set(filteredSku));
-  };
-
-  const categoriesForSelectedGroup = getCategoriesForGroup(
-    group,
-    categoriesState,
-  );
-  const subcategoriesForSelectedCategory = getSubcategoriesForCategory(
-    category,
-    categoriesState,
-  );
-  const skuForSelectedSubcategory = getSkuForSubcategory(
-    subcategories,
-    categoriesState,
-  );
-
   const handleChangeTk = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
 
-    if (!tk.includes(newValue)) {
-      // setTk((prevTk) => [...prevTk, newValue]);
-      dispatch(setTk([...tk, newValue]));
+    const selectedShop = shops.find((shop) => shop.store === newValue);
+
+    if (selectedShop && tk.id !== selectedShop.id) {
+      const shopToSave = { id: selectedShop.id, store: selectedShop.store };
+      dispatch(setTk(shopToSave));
+      dispatch(getGroupsApi({ storeId: selectedShop.id }));
     }
   };
 
   const handleChangeGroup = (event: SelectChangeEvent) => {
-    const newValue = event.target.value as string;
+    const newValue = event.target.value;
 
-    if (!group.includes(newValue)) {
-      // setGroup((prevGroup) => [...prevGroup, newValue]);
-      dispatch(setGroup([...group, newValue]));
+    const selectedGroup = groups.find((item) => item.group_id === newValue);
+
+    if (selectedGroup && group.groupId !== newValue) {
+      const updatedGroup = {
+        ...group,
+        groupId: selectedGroup.group_id,
+        id: selectedGroup.id,
+      };
+      dispatch(setGroup(updatedGroup));
+      dispatch(
+        getСategoriesApi({ groupsId: selectedGroup.id, storeId: tk.id }),
+      );
     }
   };
 
   const handleChangeCategory = (event: SelectChangeEvent) => {
-    const newValue = event.target.value as string;
+    const newValue = event.target.value;
 
-    if (!category.includes(newValue)) {
-      // setCategory((prevCategory) => [...prevCategory, newValue]);
-      dispatch(setCategory([...category, newValue]));
+    const selectedCategories = categories.find(
+      (item) => item.cat_id === newValue,
+    );
+
+    if (selectedCategories && category.catId !== newValue) {
+      const updatedCategories = {
+        ...category,
+        catId: selectedCategories.cat_id,
+        id: selectedCategories.id,
+      };
+      dispatch(setCategory(updatedCategories));
+      dispatch(
+        getSubcategoriesApi({
+          categoriesId: selectedCategories.id,
+          groupsId: group.id,
+          storeId: tk.id,
+        }),
+      );
     }
   };
 
   const handleChangeSubcategories = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
 
-    if (!subcategories.includes(newValue)) {
-      // setSubcategories((prevSubcategories) => [...prevSubcategories, newValue]);
-      dispatch(setSubcategories([...subcategories, newValue]));
+    const selectedSubcategories = subcategories.find(
+      (item) => item.subcat_id === newValue,
+    );
+
+    if (selectedSubcategories && subcategory.subcatId !== newValue) {
+      const updatedSubcategories = {
+        ...subcategory,
+        subcatId: selectedSubcategories.subcat_id,
+        id: selectedSubcategories.id,
+      };
+      dispatch(setSubcategory(updatedSubcategories));
+      dispatch(
+        getSkuApi({
+          categoriesId: category.id,
+          groupId: group.id,
+          storeId: tk.id,
+          subcategoriesId: selectedSubcategories.id,
+        }),
+      );
     }
   };
 
   const handleChangeSku = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
 
-    if (!sku.includes(newValue)) {
-      // setSku((prevSku) => [...prevSku, newValue]);
-      dispatch(setSku([...sku, newValue]));
+    const selectedSku = skuData.find((item) => item.pr_sku_id === newValue);
+
+    if (selectedSku && sku.skuId !== newValue) {
+      const updatedSku = {
+        ...sku,
+        skuId: selectedSku.pr_sku_id,
+        id: selectedSku.id,
+      };
+      dispatch(setSku(updatedSku));
     }
   };
 
@@ -136,41 +152,35 @@ const Filter: FC = () => {
     dispatch(setPeriod(newValue));
   };
 
-  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const allTkValues = shops.map((item) => item.store);
-      dispatch(setTk(allTkValues));
-    } else {
-      dispatch(setTk([]));
-    }
-  };
+  // const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.checked) {
+  //     const allTkValues = shops.map((item) => item.store);
+  //     dispatch(setTk(allTkValues));
+  //   } else {
+  //     dispatch(setTk([]));
+  //   }
+  // };
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value as string;
     dispatch(setSelectedDate(newValue));
   };
 
-  // Обработка кнопки поиска
+  //Обработка кнопки поиска
 
   const handleClick = () => {
     const token = localStorage.getItem('accessToken') ?? '';
 
-    const skuId = categoriesState
-      .filter((item) => sku.includes(item.sku))
-      .map((item) => item.id);
-
-    const storeId = shops
-      .filter((item) => tk.includes(item.store))
-      .map((item) => item.id);
-
     dispatch(
-      getSaleApi({ skuId, date: selectedDate, storeId, time: period, token }),
+      getSaleApi({
+        skuId: sku.id,
+        date: selectedDate,
+        storeId: tk.id,
+        time: period,
+        token,
+      }),
     );
     navigate('/forecast');
-    console.log(skuId);
-    console.log(selectedDate);
-    console.log(storeId);
-    console.log(period);
   };
 
   return (
@@ -209,10 +219,9 @@ const Filter: FC = () => {
             }}
             labelId="select-label-1"
             id="select-1"
-            value={tk[tk.length - 1] || ''}
+            value={tk.store}
             label="Код ТК"
             onChange={handleChangeTk}
-            displayEmpty
           >
             {shops.map((item, index) => (
               <MenuItem key={index} value={item.store}>
@@ -220,13 +229,13 @@ const Filter: FC = () => {
               </MenuItem>
             ))}
           </Select>
-          <label style={{ display: 'flex', alignItems: 'center' }}>
+          {/* <label style={{ display: 'flex', alignItems: 'center' }}>
             <Checkbox
               checked={tk.length === shops.length}
               onChange={handleSelectAll}
             />
             Выбрать все ТК
-          </label>
+          </label> */}
         </FormControl>
         <FormControl>
           <InputLabel
@@ -239,15 +248,19 @@ const Filter: FC = () => {
             sx={{ width: '265px', marginRight: 2.5, borderRadius: '40px' }}
             labelId="select-label-2"
             id="select-2"
-            value={group[group.length - 1] || ''}
+            value={group.groupId}
             label="Группа товаров"
             onChange={handleChangeGroup}
           >
-            {uniqueGroups.map((item, index) => (
-              <MenuItem key={index} value={item}>
-                {item}
-              </MenuItem>
-            ))}
+            {groups.length > 0 ? (
+              groups.map((item) => (
+                <MenuItem key={item.id} value={item.group_id}>
+                  {item.group_id}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem disabled>Нет доступных групп</MenuItem>
+            )}
           </Select>
         </FormControl>
         <FormControl>
@@ -261,15 +274,19 @@ const Filter: FC = () => {
             sx={{ width: '265px', marginRight: 2.5, borderRadius: '40px' }}
             labelId="select-label-3"
             id="select-3"
-            value={category[category.length - 1] || ''}
+            value={category.catId}
             label="Категория товаров"
             onChange={handleChangeCategory}
           >
-            {categoriesForSelectedGroup.map((item, index) => (
-              <MenuItem key={index} value={item}>
-                {item}
-              </MenuItem>
-            ))}
+            {categories.length > 0 ? (
+              categories.map((item) => (
+                <MenuItem key={item.id} value={item.cat_id}>
+                  {item.cat_id}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem disabled>Нет доступных категорий</MenuItem>
+            )}
           </Select>
         </FormControl>
         <FormControl>
@@ -283,15 +300,19 @@ const Filter: FC = () => {
             sx={{ width: '265px', marginRight: 2.5, borderRadius: '40px' }}
             labelId="select-label-4"
             id="select-4"
-            value={subcategories[subcategories.length - 1] || ''}
+            value={subcategory.subcatId}
             label="Подкатегория товаров"
             onChange={handleChangeSubcategories}
           >
-            {subcategoriesForSelectedCategory.map((item, index) => (
-              <MenuItem key={index} value={item}>
-                {item}
-              </MenuItem>
-            ))}
+            {subcategories.length > 0 ? (
+              subcategories.map((item) => (
+                <MenuItem key={item.id} value={item.subcat_id}>
+                  {item.subcat_id}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem disabled>Нет доступных подкатегорий</MenuItem>
+            )}
           </Select>
         </FormControl>
         <FormControl>
@@ -305,15 +326,19 @@ const Filter: FC = () => {
             sx={{ width: '265px', marginRight: 2.5, borderRadius: '40px' }}
             labelId="select-label-6"
             id="select-6"
-            value={sku[sku.length - 1] || ''}
+            value={sku.skuId || ''}
             label="Товар"
             onChange={handleChangeSku}
           >
-            {skuForSelectedSubcategory.map((item, index) => (
-              <MenuItem key={index} value={item}>
-                {item}
-              </MenuItem>
-            ))}
+            {skuData.length > 0 ? (
+              skuData.map((item, index) => (
+                <MenuItem key={index} value={item.pr_sku_id}>
+                  {item.pr_sku_id}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem disabled>Нет доступных товаров</MenuItem>
+            )}
           </Select>
         </FormControl>
         <FormControl>
@@ -353,24 +378,13 @@ const Filter: FC = () => {
             }}
           />
         </FormControl>
-        {/* <Button
-          sx={{
-            width: 'auto',
-            backgroundColor: '#001E64',
-            color: 'white',
-            fontSize: '16px',
-            fontWeight: '400',
-            height: '56px',
-            mt: '40px',
-            '&:hover': {
-              backgroundColor: 'rgba(25, 118, 210, 0.9)',
-            },
-          }}
+        <LoginButton
+          fullWidth
+          type="button"
           onClick={handleClick}
+          variant="contained"
+          sx={{ mt: 3 }}
         >
-          Найти
-        </Button> */}
-        <LoginButton fullWidth type="button" onClick={handleClick} variant="contained" sx={{ mt: 3 }}>
           Найти
         </LoginButton>
       </Box>
