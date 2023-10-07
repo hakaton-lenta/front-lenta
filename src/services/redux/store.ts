@@ -7,6 +7,7 @@ import { saleReduser } from './slices/sale/sale';
 import { groupsReduser } from './slices/groups/groups';
 import { subcategoriesReduser } from './slices/subcategories/subcategories';
 import { skuReduser } from './slices/sku/sku';
+import { predictReduser } from './slices/predict/predict';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     categories: categoriesReduser,
     subcategories: subcategoriesReduser,
     sku: skuReduser,
+    predict: predictReduser,
   },
 });
 
