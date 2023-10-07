@@ -19,7 +19,7 @@ export const store = configureStore({
     categories: categoriesReduser,
     subcategories: subcategoriesReduser,
     sku: skuReduser,
-    predict: predictReduser
+    predict: predictReduser,
   },
 });
 

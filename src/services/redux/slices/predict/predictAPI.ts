@@ -18,11 +18,9 @@ const fetchData = (url: string, token: string) => {
   }).then((res) => checkRes(res));
 };
 
-export const fetchPredict = (
-  skuId: number,
-  storeId: number,
-  token: string,
-) => {
+export const fetchPredict = (skuId: number, storeId: number, token: string) => {
   return fetchData(
-    `${API_BASE_URL}/forecast/get_forecast/?product=${skuId}&store=${storeId}`, token);
+    `${API_BASE_URL}/forecast/get_forecast/?product=${skuId}&store=${storeId}`,
+    token,
+  );
 };

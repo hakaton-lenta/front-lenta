@@ -181,11 +181,13 @@ const Filter: FC = () => {
         token,
       }),
     );
-    dispatch(getPredictApi({
-      skuId: sku.id,
-      storeId: tk.id,
-      token
-    }));
+    dispatch(
+      getPredictApi({
+        skuId: sku.id,
+        storeId: tk.id,
+        token,
+      }),
+    );
     navigate('/forecast');
   };
 

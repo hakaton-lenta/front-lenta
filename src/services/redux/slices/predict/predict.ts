@@ -59,4 +59,5 @@ export const predictSlice = createSlice({
 
 export const predictReduser = predictSlice.reducer;
 
-export const predictSelect = (state: { predict: SaleState }) => state.predict.data;
+export const predictSelect = (state: { predict: SaleState }) =>
+  state.predict.data;
