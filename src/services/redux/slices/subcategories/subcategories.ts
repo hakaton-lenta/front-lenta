@@ -25,7 +25,12 @@ interface ISubcategoriesState {
 export const getSubcategoriesApi = createAsyncThunk(
   '@@subcategories/subcategories',
   async (
-    arg: { categoriesId: number; groupsId: number; storeId: number, token: string },
+    arg: {
+      categoriesId: number;
+      groupsId: number;
+      storeId: number;
+      token: string;
+    },
     { fulfillWithValue, rejectWithValue },
   ) => {
     try {
@@ -34,7 +39,7 @@ export const getSubcategoriesApi = createAsyncThunk(
         categoriesId,
         groupsId,
         storeId,
-        token
+        token,
       );
       return fulfillWithValue(response);
     } catch (error: unknown) {

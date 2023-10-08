@@ -23,9 +23,10 @@ export const fetchSku = (
   groupId: number,
   storeId: number,
   subcategoriesId: number,
-  token: string
+  token: string,
 ) => {
   return fetchData(
-    `${API_BASE_URL}/filters/products/?category=${categoriesId}&group=${groupId}&store=${storeId}&subcategory=${subcategoriesId}`, token
+    `${API_BASE_URL}/filters/products/?category=${categoriesId}&group=${groupId}&store=${storeId}&subcategory=${subcategoriesId}`,
+    token,
   );
 };

@@ -22,9 +22,10 @@ export const fetchSubcategories = (
   categoriesId: number,
   groupsId: number,
   storeId: number,
-  token: string
+  token: string,
 ) => {
   return fetchData(
-    `${API_BASE_URL}/filters/subcategories_with_sales/?category=${categoriesId}&group=${groupsId}&store=${storeId}`, token
+    `${API_BASE_URL}/filters/subcategories_with_sales/?category=${categoriesId}&group=${groupsId}&store=${storeId}`,
+    token,
   );
 };

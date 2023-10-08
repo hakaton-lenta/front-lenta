@@ -18,8 +18,13 @@ const fetchData = (url: string, token: string) => {
   }).then((res) => checkRes(res));
 };
 
-export const fetchCategories = (groupsId: number, storeId: number, token: string) => {
+export const fetchCategories = (
+  groupsId: number,
+  storeId: number,
+  token: string,
+) => {
   return fetchData(
-    `${API_BASE_URL}/filters/categories_with_sales/?group=${groupsId}&store=${storeId}`, token
+    `${API_BASE_URL}/filters/categories_with_sales/?group=${groupsId}&store=${storeId}`,
+    token,
   );
 };

@@ -18,7 +18,7 @@ export const getSkuApi = createAsyncThunk(
       groupId: number;
       storeId: number;
       subcategoriesId: number;
-      token: string
+      token: string;
     },
     { fulfillWithValue, rejectWithValue },
   ) => {
@@ -29,7 +29,7 @@ export const getSkuApi = createAsyncThunk(
         groupId,
         storeId,
         subcategoriesId,
-        token
+        token,
       );
       return fulfillWithValue(response);
     } catch (error: unknown) {

@@ -20,6 +20,7 @@ const fetchData = (url: string, token: string) => {
 
 export const fetchGroups = (storeId: number, token: string) => {
   return fetchData(
-    `${API_BASE_URL}/filters/groups_whith_sales/?store=${storeId}`, token
+    `${API_BASE_URL}/filters/groups_whith_sales/?store=${storeId}`,
+    token,
   );
 };

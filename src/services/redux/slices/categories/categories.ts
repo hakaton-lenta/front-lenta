@@ -23,7 +23,7 @@ interface IСategoriesState {
 export const getСategoriesApi = createAsyncThunk(
   '@@categories/categories',
   async (
-    arg: { groupsId: number; storeId: number, token: string },
+    arg: { groupsId: number; storeId: number; token: string },
     { fulfillWithValue, rejectWithValue },
   ) => {
     try {

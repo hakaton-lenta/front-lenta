@@ -18,7 +18,10 @@ interface IGroupsState {
 
 export const getGroupsApi = createAsyncThunk(
   '@@groups/groups',
-  async (arg: { storeId: number, token: string }, { fulfillWithValue, rejectWithValue }) => {
+  async (
+    arg: { storeId: number; token: string },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
       const { storeId, token } = arg;
       const response = await fetchGroups(storeId, token);

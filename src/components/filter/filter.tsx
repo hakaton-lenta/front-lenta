@@ -103,7 +103,7 @@ const Filter: FC = () => {
           categoriesId: selectedCategories.id,
           groupsId: group.id,
           storeId: tk.id,
-          token
+          token,
         }),
       );
     }
@@ -129,7 +129,7 @@ const Filter: FC = () => {
           groupId: group.id,
           storeId: tk.id,
           subcategoriesId: selectedSubcategories.id,
-          token
+          token,
         }),
       );
     }
@@ -173,7 +173,6 @@ const Filter: FC = () => {
   //Обработка кнопки поиска
 
   const handleClick = () => {
-
     dispatch(
       getSaleApi({
         skuId: sku.id,
