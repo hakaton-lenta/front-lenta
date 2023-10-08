@@ -1,4 +1,5 @@
 import { Box, Grid } from '@mui/material';
+import styles from './statistics.module.scss';
 import Features from '../../components/features/features';
 import {
   CustomPaper,
@@ -151,8 +152,9 @@ const Statistics = () => {
           <CustomPaper>
             <TitleGraphBlock>
               <TitleGraph>
-                График фактических продаж
-                <br />и прогнозирования спроса за 14 дней
+                График продаж и прогнозирования
+                <br />
+                спроса за предыдущие 14 дней
               </TitleGraph>
               <TitleList>
                 <TitleListLi>
@@ -253,7 +255,11 @@ const Statistics = () => {
         <Grid item xs={6}>
           <CustomPaper>
             <TitleGraphBlock>
-              <TitleGraph>График прогнозирования спроса на 14 дней</TitleGraph>
+              <TitleGraph>
+                График прогнозирования спроса
+                <br />
+                на следующие 14 дней
+              </TitleGraph>
               <TitleList>
                 <TitleListLi>
                   <TitleListSpan
@@ -319,11 +325,11 @@ const Statistics = () => {
                   <TitleDesc>Всего:</TitleDesc>
                   <LineDesc>
                     <LineDescLeftPart>Прибыль</LineDescLeftPart>
-                    <LineDescRightPart>+5,5%</LineDescRightPart>
+                    <LineDescRightPart>N/A</LineDescRightPart>
                   </LineDesc>
                   <LineDesc>
                     <LineDescLeftPart>Потери</LineDescLeftPart>
-                    <LineDescRightPart>-0,2%</LineDescRightPart>
+                    <LineDescRightPart>N/A</LineDescRightPart>
                   </LineDesc>
                   <LineDesc>
                     <LineDescLeftPart>
@@ -331,7 +337,7 @@ const Statistics = () => {
                       <br /> прогноза
                     </LineDescLeftPart>
                     <LineDescRightPart style={{ color: 'green' }}>
-                      90%
+                      N/A
                     </LineDescRightPart>
                   </LineDesc>
                 </div>
@@ -339,23 +345,26 @@ const Statistics = () => {
                   <TitleDesc>В прошлом:</TitleDesc>
                   <LineDesc>
                     <LineDescLeftPart>год</LineDescLeftPart>
-                    <LineDescRightPart>+2,2%</LineDescRightPart>
+                    <LineDescRightPart>N/A</LineDescRightPart>
                   </LineDesc>
                   <LineDesc>
                     <LineDescLeftPart>месяц</LineDescLeftPart>
-                    <LineDescRightPart>+0,3%</LineDescRightPart>
+                    <LineDescRightPart>N/A</LineDescRightPart>
                   </LineDesc>
                   <LineDesc>
                     <LineDescLeftPart>неделя</LineDescLeftPart>
-                    <LineDescRightPart>+0,3%</LineDescRightPart>
+                    <LineDescRightPart>N/A</LineDescRightPart>
                   </LineDesc>
                 </div>
               </RightDescBlock>
             </Grid>
           </CustomPaper>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={9}>
           <CustomPaper style={{ padding: '0' }}>
+            <TitleGraphBlock style={{alignItems: 'center',padding: '0 12px', margin: '0'}}>
+              <TitleGraph>Фактические и спрогнозированные продажи</TitleGraph>
+            </TitleGraphBlock>
             <Box sx={{ height: 400, width: '100%' }}>
               <DataGrid
                 rows={rows}
@@ -370,8 +379,43 @@ const Statistics = () => {
                 pageSizeOptions={[5]}
                 // checkboxSelection
                 disableRowSelectionOnClick
+                sx={
+                  {
+                    '&.MuiDataGrid-root': {
+                      borderRadius: '0',
+                      border: 'none',
+                    },
+                    '& .MuiDataGrid-cell': {
+                      // borderBottom: 'none',
+                    },
+                    '& .MuiDataGrid-columnHeaders': {
+                      // backgroundColor: '#F0F0F0',
+                      backgroundColor: 'rgba(0,0,0,0.02)',
+                    },
+                  }
+                }
               />
             </Box>
+          </CustomPaper>
+        </Grid>
+        <Grid item xs={3}>
+          <CustomPaper style={{ padding: '12px' }}>
+            <TitleDesc>Спрос на 14 дней:</TitleDesc>
+            <LineDesc>
+              <LineDescLeftPart>Прогноз</LineDescLeftPart>
+              <LineDescRightPart>1000&nbsp;шт</LineDescRightPart>
+            </LineDesc>
+            <LineDesc>
+              <LineDescLeftPart>Остаток</LineDescLeftPart>
+              <LineDescRightPart>N/A</LineDescRightPart>
+            </LineDesc>
+            <LineDesc>
+              <LineDescLeftPart>Закупка</LineDescLeftPart>
+              <LineDescRightPart style={{ color: 'green' }}>
+                N/A
+              </LineDescRightPart>
+            </LineDesc>
+            <button className={styles.export}>Выгрузить</button>
           </CustomPaper>
         </Grid>
       </Grid>
