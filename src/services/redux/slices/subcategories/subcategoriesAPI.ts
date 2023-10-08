@@ -8,11 +8,12 @@ const checkRes = (res: Response) => {
   }
 };
 
-const fetchData = (url: string) => {
+const fetchData = (url: string, token: string) => {
   return fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => checkRes(res));
 };
@@ -21,8 +22,10 @@ export const fetchSubcategories = (
   categoriesId: number,
   groupsId: number,
   storeId: number,
+  token: string,
 ) => {
   return fetchData(
     `${API_BASE_URL}/filters/subcategories_with_sales/?category=${categoriesId}&group=${groupsId}&store=${storeId}`,
+    token,
   );
 };

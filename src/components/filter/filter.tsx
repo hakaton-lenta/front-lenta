@@ -52,6 +52,7 @@ const Filter: FC = () => {
   const sku = useAppSelector((state) => state.filter.sku);
   const period = useAppSelector((state) => state.filter.period);
   const selectedDate = useAppSelector((state) => state.filter.selectedDate);
+  const token = localStorage.getItem('accessToken') ?? '';
 
   const handleChangeTk = (event: SelectChangeEvent) => {
     const newValue = event.target.value as string;
@@ -61,7 +62,7 @@ const Filter: FC = () => {
     if (selectedShop && tk.id !== selectedShop.id) {
       const shopToSave = { id: selectedShop.id, store: selectedShop.store };
       dispatch(setTk(shopToSave));
-      dispatch(getGroupsApi({ storeId: selectedShop.id }));
+      dispatch(getGroupsApi({ storeId: selectedShop.id, token }));
     }
   };
 
@@ -78,7 +79,7 @@ const Filter: FC = () => {
       };
       dispatch(setGroup(updatedGroup));
       dispatch(
-        getСategoriesApi({ groupsId: selectedGroup.id, storeId: tk.id }),
+        getСategoriesApi({ groupsId: selectedGroup.id, storeId: tk.id, token }),
       );
     }
   };
@@ -102,6 +103,7 @@ const Filter: FC = () => {
           categoriesId: selectedCategories.id,
           groupsId: group.id,
           storeId: tk.id,
+          token,
         }),
       );
     }
@@ -127,6 +129,7 @@ const Filter: FC = () => {
           groupId: group.id,
           storeId: tk.id,
           subcategoriesId: selectedSubcategories.id,
+          token,
         }),
       );
     }
@@ -170,8 +173,6 @@ const Filter: FC = () => {
   //Обработка кнопки поиска
 
   const handleClick = () => {
-    const token = localStorage.getItem('accessToken') ?? '';
-
     dispatch(
       getSaleApi({
         skuId: sku.id,

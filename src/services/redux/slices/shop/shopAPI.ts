@@ -8,15 +8,16 @@ const checkRes = (res: Response) => {
   }
 };
 
-const fetchData = (url: string) => {
+const fetchData = (url: string, token: string) => {
   return fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => checkRes(res));
 };
 
-export const fetchShop = () => {
-  return fetchData(`${API_BASE_URL}/shops/`);
+export const fetchShop = (token: string) => {
+  return fetchData(`${API_BASE_URL}/shops/`, token);
 };

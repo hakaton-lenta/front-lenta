@@ -18,16 +18,18 @@ export const getSkuApi = createAsyncThunk(
       groupId: number;
       storeId: number;
       subcategoriesId: number;
+      token: string;
     },
     { fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const { categoriesId, groupId, storeId, subcategoriesId } = arg;
+      const { categoriesId, groupId, storeId, subcategoriesId, token } = arg;
       const response = await fetchSku(
         categoriesId,
         groupId,
         storeId,
         subcategoriesId,
+        token,
       );
       return fulfillWithValue(response);
     } catch (error: unknown) {
