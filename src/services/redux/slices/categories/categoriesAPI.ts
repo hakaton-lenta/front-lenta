@@ -8,17 +8,18 @@ const checkRes = (res: Response) => {
   }
 };
 
-const fetchData = (url: string) => {
+const fetchData = (url: string, token: string) => {
   return fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => checkRes(res));
 };
 
-export const fetchCategories = (groupsId: number, storeId: number) => {
+export const fetchCategories = (groupsId: number, storeId: number, token: string) => {
   return fetchData(
-    `${API_BASE_URL}/filters/categories_with_sales/?group=${groupsId}&store=${storeId}`,
+    `${API_BASE_URL}/filters/categories_with_sales/?group=${groupsId}&store=${storeId}`, token
   );
 };

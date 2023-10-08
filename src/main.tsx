@@ -44,7 +44,7 @@ const App = () => {
   useEffect(() => {
     if (access.length !== 0) {
       dispatch(getProfileUser({ access }));
-      dispatch(getShopApi());
+      dispatch(getShopApi({token: access}));
     } else {
       dispatch(logoutUser({ access }));
       <Navigate to={ROUTE_LOGIN} />;

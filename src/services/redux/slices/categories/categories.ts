@@ -23,12 +23,12 @@ interface IСategoriesState {
 export const getСategoriesApi = createAsyncThunk(
   '@@categories/categories',
   async (
-    arg: { groupsId: number; storeId: number },
+    arg: { groupsId: number; storeId: number, token: string },
     { fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const { groupsId, storeId } = arg;
-      const response = await fetchCategories(groupsId, storeId);
+      const { groupsId, storeId, token } = arg;
+      const response = await fetchCategories(groupsId, storeId, token);
       return fulfillWithValue(response);
     } catch (error: unknown) {
       return rejectWithValue(error);
