@@ -18,9 +18,15 @@ interface IShopState {
 
 export const getShopApi = createAsyncThunk(
   '@@shop/shop',
-  async (_, { fulfillWithValue, rejectWithValue }) => {
+  async (
+    arg: {
+      token: string;
+    },
+    { fulfillWithValue, rejectWithValue },
+  ) => {
     try {
-      const response = await fetchShop();
+      const { token } = arg;
+      const response = await fetchShop(token);
       return fulfillWithValue(response);
     } catch (error: unknown) {
       return rejectWithValue(error);
