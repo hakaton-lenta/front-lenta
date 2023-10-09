@@ -20,6 +20,14 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { RootState } from '../../services/redux/store';
 import { useAppSelector } from '../../services/typeHooks';
 import { useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { DOWNLOAD_URL } from '../../utils/constants';
+import { FetchDownloadXlsx, FetchDownloadCsv } from '../../utils/downloadAPI';
 
 // const seriesA = {
 //   id: 'Aseria',
@@ -108,6 +116,11 @@ const Statistics = () => {
   const [targets, setTargets] = useState<number[]>([]);//значения прогноза
   const [dates, setDates] = useState<string[]>([]);//даты прогноза
   const [transformedData, setTransformedData] = useState<TransformedData[]>([]);//данные для таблицы
+  const [open, setOpen] = useState(false);
+  const tk = useAppSelector((state) => state.filter.tk);
+  const sku = useAppSelector((state) => state.filter.sku);
+  const token = localStorage.getItem('accessToken') ?? '';
+
   // console.log(predicto);
   useEffect(() => {
     if (predicto.length > 0) {
@@ -122,11 +135,9 @@ const Statistics = () => {
         lsum += item.target;
         updatedTargets.push(item.target);
         const date = new Date(item.date);
-        const formattedDate = `${
-          date.getDate() < 10 ? '0' : ''
-        }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
-          date.getMonth() + 1
-        }`;
+        const formattedDate = `${date.getDate() < 10 ? '0' : ''
+          }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1
+          }`;
         updatedDates.push(formattedDate);
       });
       setMaxPredict(lmax);
@@ -137,11 +148,9 @@ const Statistics = () => {
       const tData: TransformedData[] = sortedData.map((item) => {
         const date = new Date(item.date);
         increment++;
-        const formattedDate = `${
-          date.getDate() < 10 ? '0' : ''
-        }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
-          date.getMonth() + 1
-        }`;
+        const formattedDate = `${date.getDate() < 10 ? '0' : ''
+          }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1
+          }`;
         return {
           id: increment,
           st_id: predicto[0].st_id,
@@ -154,6 +163,23 @@ const Statistics = () => {
       setTransformedData(tData);
     }
   }, [predicto]);
+
+  const handleExportClick = () => {
+    setOpen(true);
+  };
+
+  const handleExcelExport = () => {
+    const downloadUrl = `${DOWNLOAD_URL}?filetype=xlsx&st_id=${tk.id}&pr_sku_id=${sku.id}`;
+    FetchDownloadXlsx(downloadUrl, token);
+    setOpen(false);
+  };
+
+  const handleCsvExport = () => {
+    const downloadUrl = `${DOWNLOAD_URL}?filetype=csv&st_id=${tk.id}&pr_sku_id=${sku.id}`;
+    FetchDownloadCsv(downloadUrl, token);
+    setOpen(false);
+  };
+
   if (targets.length > 0 && dates.length > 0) {
     return (
       <div className="forecast" style={{ margin: '40px 24px', width: '100vw' }}>
@@ -453,7 +479,26 @@ const Statistics = () => {
                   -
                 </LineDescRightPart>
               </LineDesc>
-              <button className={styles.export}>Выгрузить</button>
+              <button className={styles.export} onClick={handleExportClick}>Выгрузить</button>
+              <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Выберите формат выгрузки</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Выберите формат для выгрузки данных:
+                  </DialogContentText>
+                  <Button onClick={handleExcelExport} color="primary">
+                    Выгрузить в Excel
+                  </Button>
+                  <Button onClick={handleCsvExport} color="primary">
+                    Выгрузить в CSV
+                  </Button>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)} color="primary">
+                    Отмена
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </CustomPaper>
           </Grid>
         </Grid>

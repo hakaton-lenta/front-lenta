@@ -5,6 +5,7 @@ export const LOGIN_URL = `${API_MAIN_URL}/auth/jwt/create/`;
 export const TOKEN_URL = `${API_MAIN_URL}/auth/jwt/refresh/`;
 export const LOGOUT_URL = `${API_MAIN_URL}/auth/logout/`;
 export const GET_USER_URL = `${API_MAIN_URL}/auth/users/me/`;
+export const DOWNLOAD_URL = `${API_BASE_URL}/forecasts/download_forecast/`
 
 export const TITLE = 'Система прогнозирования спроса товаров';
 export const ENTER_TO_SYSTEM = 'Вход в систему';
