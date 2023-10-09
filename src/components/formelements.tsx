@@ -157,7 +157,6 @@ export const TitleGraphBlock = styled(Box)({
   alignItems: 'start',
   textAlign: 'left',
   marginBottom: '16px',
-
 });
 
 export const TitleGraph = styled(Box)({
@@ -182,7 +181,7 @@ export const TitleListLi = styled(Box)({
 export const TitleListSpan = styled(Box)({
   width: '10px',
   height: '10px',
-  
+
   borderRadius: '50%',
   marginRight: '4px',
 });
