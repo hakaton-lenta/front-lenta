@@ -40,7 +40,7 @@ export const register = (email: string, password: string) => {
 };
 
 export const refresh = (access: string) => {
-  return fetchData(`${TOKEN_URL}`, { access});
+  return fetchData(`${TOKEN_URL}`, { access });
 };
 
 export const getuser = (access: string) => {

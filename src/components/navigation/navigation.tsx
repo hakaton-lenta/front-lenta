@@ -82,7 +82,7 @@ const OpenComponent: React.FC = () => {
     padding: '20px',
     textAlign: 'center',
     cursor: 'pointer',
-    borderRadius: '24px'
+    borderRadius: '24px',
   };
 
   const activeDropZoneStyle: React.CSSProperties = {
@@ -96,32 +96,36 @@ const OpenComponent: React.FC = () => {
         <nav className="open__nav">
           <NavLink
             to="/"
-            className={`open__menu-link ${location.pathname === '/' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/' ? 'open__menu-active' : ''
+            }`}
           >
             <img className="open__nav-img" src={trello} alt="Icon 1" />
             Планер
           </NavLink>
           <NavLink
             to="/forecast"
-            className={`open__menu-link ${location.pathname === '/forecast' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/forecast' ? 'open__menu-active' : ''
+            }`}
           >
             <img className="open__nav-img" src={chartScatter} alt="Icon 1" />
             Прогноз
           </NavLink>
           <NavLink
             to="/statistics"
-            className={`open__menu-link ${location.pathname === '/statistics' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/statistics' ? 'open__menu-active' : ''
+            }`}
           >
             <img className="open__nav-img" src={chartLine} alt="Icon 1" />
             Статистика
           </NavLink>
           <NavLink
             to="/reports"
-            className={`open__menu-link ${location.pathname === '/reports' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/reports' ? 'open__menu-active' : ''
+            }`}
             style={{ pointerEvents: 'none', opacity: 0.5 }}
           >
             <img className="open__nav-img" src={fileText} alt="Icon 1" />
@@ -129,8 +133,9 @@ const OpenComponent: React.FC = () => {
           </NavLink>
           <NavLink
             to="/library"
-            className={`open__menu-link ${location.pathname === '/library' ? 'open__menu-active' : ''
-              }`}
+            className={`open__menu-link ${
+              location.pathname === '/library' ? 'open__menu-active' : ''
+            }`}
             style={{ pointerEvents: 'none', opacity: 0.5 }}
           >
             <img className="open__nav-img" src={bookOpen} alt="Icon 1" />
@@ -139,7 +144,6 @@ const OpenComponent: React.FC = () => {
         </nav>
       </div>
       <div>
-
         <div>
           <Button
             variant="contained"
@@ -147,7 +151,7 @@ const OpenComponent: React.FC = () => {
             style={{
               background: 'transparent',
               padding: '0',
-              boxShadow: 'none'
+              boxShadow: 'none',
             }}
           >
             <CloudUploadOutlinedIcon
@@ -165,14 +169,19 @@ const OpenComponent: React.FC = () => {
                 bgcolor: 'background.paper',
                 boxShadow: 24,
                 p: 4,
-                borderRadius: '24px'
+                borderRadius: '24px',
               }}
             >
               <Box sx={{ display: 'flex', marginBottom: '16px' }}>
                 <CloudUploadOutlinedIcon
                   style={{ color: '#003C96', margin: 'auto 16px auto 0' }}
                 />
-                <Typography variant="h6" component="div" gutterBottom sx={{ margin: 0, color: '#003C96' }}>
+                <Typography
+                  variant="h6"
+                  component="div"
+                  gutterBottom
+                  sx={{ margin: 0, color: '#003C96' }}
+                >
                   Выбор файла
                 </Typography>
               </Box>
@@ -184,7 +193,10 @@ const OpenComponent: React.FC = () => {
                 onDrop={handleDrop}
               >
                 <div
-                  style={{ ...dropZoneStyle, ...(selectedFile ? activeDropZoneStyle : {}) }}
+                  style={{
+                    ...dropZoneStyle,
+                    ...(selectedFile ? activeDropZoneStyle : {}),
+                  }}
                 >
                   {selectedFile ? (
                     <>
@@ -194,26 +206,38 @@ const OpenComponent: React.FC = () => {
                   ) : (
                     <>
                       <p>Перетащите файл сюда или</p>
-                      <input type="file" onChange={handleFileUpload} accept=".csv" />
+                      <input
+                        type="file"
+                        onChange={handleFileUpload}
+                        accept=".csv"
+                      />
                     </>
                   )}
                 </div>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   {selectedFile && (
-                    <Button variant="contained" onClick={handleUpload} sx={{ 
-                      marginTop: '24px',
-                      borderRadius: '40px',
-                      backgroundColor: '#003C96'
-                      }}>
+                    <Button
+                      variant="contained"
+                      onClick={handleUpload}
+                      sx={{
+                        marginTop: '24px',
+                        borderRadius: '40px',
+                        backgroundColor: '#003C96',
+                      }}
+                    >
                       Отправить файл
                     </Button>
                   )}
                   {selectedFile && (
-                    <Button variant="contained" onClick={handleClearFile} sx={{ 
-                      marginTop: '24px',
-                      borderRadius: '40px',
-                      backgroundColor: '#003C96' 
-                      }}>
+                    <Button
+                      variant="contained"
+                      onClick={handleClearFile}
+                      sx={{
+                        marginTop: '24px',
+                        borderRadius: '40px',
+                        backgroundColor: '#003C96',
+                      }}
+                    >
                       Очистить файл
                     </Button>
                   )}
@@ -239,7 +263,6 @@ const OpenComponent: React.FC = () => {
 };
 
 const Navigation: FC = () => {
-
   return (
     <div style={{ display: 'flex' }}>
       <div className="menu">

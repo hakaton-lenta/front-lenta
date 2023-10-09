@@ -110,12 +110,12 @@ interface TransformedData {
 
 const Statistics = () => {
   // const sales = useAppSelector((state: RootState) => state.sale.data);
-  const predicto = useAppSelector((state: RootState) => state.predict.data);//данные прогноза
-  const [maxPredict, setMaxPredict] = useState<number>(0);//максимальный прогноз
-  const [sumPredict, setSumPredict] = useState<number>(0);//Сумма прогноза
-  const [targets, setTargets] = useState<number[]>([]);//значения прогноза
-  const [dates, setDates] = useState<string[]>([]);//даты прогноза
-  const [transformedData, setTransformedData] = useState<TransformedData[]>([]);//данные для таблицы
+  const predicto = useAppSelector((state: RootState) => state.predict.data); //данные прогноза
+  const [maxPredict, setMaxPredict] = useState<number>(0); //максимальный прогноз
+  const [sumPredict, setSumPredict] = useState<number>(0); //Сумма прогноза
+  const [targets, setTargets] = useState<number[]>([]); //значения прогноза
+  const [dates, setDates] = useState<string[]>([]); //даты прогноза
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([]); //данные для таблицы
   const [open, setOpen] = useState(false);
   const tk = useAppSelector((state) => state.filter.tk);
   const sku = useAppSelector((state) => state.filter.sku);
@@ -128,16 +128,18 @@ const Statistics = () => {
       const sortedData = [...predictArray].reverse();
       const updatedTargets: number[] = [];
       const updatedDates: string[] = [];
-      let lmax = 0;//локальный максимум
-      let lsum = 0;//локальная сумма
+      let lmax = 0; //локальный максимум
+      let lsum = 0; //локальная сумма
       sortedData.forEach((item) => {
         if (lmax < item.target) lmax = item.target;
         lsum += item.target;
         updatedTargets.push(item.target);
         const date = new Date(item.date);
-        const formattedDate = `${date.getDate() < 10 ? '0' : ''
-          }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1
-          }`;
+        const formattedDate = `${
+          date.getDate() < 10 ? '0' : ''
+        }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
+          date.getMonth() + 1
+        }`;
         updatedDates.push(formattedDate);
       });
       setMaxPredict(lmax);
@@ -148,9 +150,11 @@ const Statistics = () => {
       const tData: TransformedData[] = sortedData.map((item) => {
         const date = new Date(item.date);
         increment++;
-        const formattedDate = `${date.getDate() < 10 ? '0' : ''
-          }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${date.getMonth() + 1
-          }`;
+        const formattedDate = `${
+          date.getDate() < 10 ? '0' : ''
+        }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
+          date.getMonth() + 1
+        }`;
         return {
           id: increment,
           st_id: predicto[0].st_id,
@@ -479,7 +483,9 @@ const Statistics = () => {
                   -
                 </LineDescRightPart>
               </LineDesc>
-              <button className={styles.export} onClick={handleExportClick}>Выгрузить</button>
+              <button className={styles.export} onClick={handleExportClick}>
+                Выгрузить
+              </button>
               <Dialog open={open} onClose={() => setOpen(false)}>
                 <DialogTitle>Выберите формат выгрузки</DialogTitle>
                 <DialogContent>
