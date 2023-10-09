@@ -9,6 +9,7 @@ interface ISaleData {
 interface ISaleProduct {
   id: number;
   pr_sku_id: string;
+  pr_uom_id: string;
   sales: ISaleData[];
 }
 

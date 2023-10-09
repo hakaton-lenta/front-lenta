@@ -61,6 +61,7 @@ const Features: FC<TFeatures> = ({ title }) => {
     border: '1px solid #CDCDCD',
     color: '#003C96',
     mr: '16px',
+    mb: '16px',
     fontSize: '16px',
     fontWeigth: '400',
     lineHeight: '24px',
@@ -122,7 +123,7 @@ const Features: FC<TFeatures> = ({ title }) => {
           </button>
         </Box>
       </Box>
-      <Box sx={{ mb: '32px', mt: '16px', display: 'flex', flexWrap: 'wrap' }}>
+      <Box sx={{ mb: '16px', mt: '16px', display: 'flex', flexWrap: 'wrap' }}>
         <Box sx={boxStyle}>
           {tk.store && (
             <Chip
