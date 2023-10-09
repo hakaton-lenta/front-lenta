@@ -3,19 +3,20 @@ import { fetchPredict } from './predictAPI';
 
 interface ISaleData {
   date: string;
-  pr_sales_in_units: number;
+  target: number;
 }
 
-interface ISaleProduct {
+interface IPredictProduct {
   id: number;
   pr_sku_id: string;
-  sales: ISaleData[];
+  pr_uom_id: string;
+  predict: ISaleData[];
 }
 
 interface ISaleStore {
   id: number;
   st_id: string;
-  goods: ISaleProduct[];
+  product: IPredictProduct;
 }
 
 interface SaleState {
