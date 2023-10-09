@@ -15,7 +15,7 @@ interface ISaleProduct {
 interface ISaleStore {
   id: number;
   st_id: string;
-  goods: ISaleProduct[];
+  products: ISaleProduct[];
 }
 
 interface SaleState {

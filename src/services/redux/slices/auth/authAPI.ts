@@ -2,7 +2,9 @@ import { checkRes } from '../../../../utils/fetch';
 import {
   GET_USER_URL,
   LOGIN_URL,
+  LOGOUT_URL,
   REGISTER_URL,
+  TOKEN_URL,
 } from '../../../../utils/constants';
 
 const fetchData = (url: string, data: object) => {
@@ -30,13 +32,15 @@ export const login = (username: string, password: string) => {
 };
 
 export const logout = (access: string) => {
-  //   return fetchData(`${LOGOUT_URL}`, { access });
-  console.log(access);
-  return '';
+  return fetchData(`${LOGOUT_URL}`, { access });
 };
 
 export const register = (email: string, password: string) => {
   return fetchData(`${REGISTER_URL}`, { email, password });
+};
+
+export const refresh = (access: string) => {
+  return fetchData(`${TOKEN_URL}`, { access});
 };
 
 export const getuser = (access: string) => {

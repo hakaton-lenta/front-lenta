@@ -189,7 +189,7 @@ const Filter: FC = () => {
         token,
       }),
     );
-    navigate('/forecast');
+    navigate('/statistics');
   };
 
   return (

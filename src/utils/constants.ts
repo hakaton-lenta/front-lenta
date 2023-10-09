@@ -2,8 +2,8 @@ export const API_MAIN_URL = 'http://158.160.123.145/api';
 export const API_BASE_URL = API_MAIN_URL + '/v1';
 export const REGISTER_URL = `${API_MAIN_URL}/auth/users/`;
 export const LOGIN_URL = `${API_MAIN_URL}/auth/jwt/create/`;
-export const TOKEN_URL = `${API_MAIN_URL}/auth/users/token`;
-export const LOGOUT_URL = `${API_MAIN_URL}/auth/users/logout/`;
+export const TOKEN_URL = `${API_MAIN_URL}/auth/jwt/refresh/`;
+export const LOGOUT_URL = `${API_MAIN_URL}/auth/logout/`;
 export const GET_USER_URL = `${API_MAIN_URL}/auth/users/me/`;
 
 export const TITLE = 'Система прогнозирования спроса товаров';
