@@ -123,7 +123,7 @@ const Features: FC<TFeatures> = ({ title }) => {
           </button>
         </Box>
       </Box>
-      <Box sx={{ mb: '16px', mt: '16px', display: 'flex', flexWrap: 'wrap' }}>
+      <Box sx={{ mb: '32px', mt: '16px', display: 'flex', flexWrap: 'wrap' }}>
         <Box sx={boxStyle}>
           {tk.store && (
             <Chip

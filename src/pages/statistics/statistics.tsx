@@ -104,16 +104,16 @@ const Statistics = () => {
   const sales = useAppSelector((state: RootState) => state.sale.data);//данные продаж
   const predicto = useAppSelector((state: RootState) => state.predict.data);//данные прогноза
 
-  const [maxPredict, setMaxPredict] = useState<number>(0);//максимальный прогноз
+  const [maxPredict, setMaxPredict] = useState<number>(0);//Максимальный прогноз
   const [sumPredict, setSumPredict] = useState<number>(0);//Сумма прогноза
-  const [targets, setTargets] = useState<number[]>([]);//значения прогноза
-  const [dates, setDates] = useState<string[]>([]);//даты прогноза
-  const [transformedData, setTransformedData] = useState<TransformedData[]>([]);//данные для таблицы
+  const [targets, setTargets] = useState<number[]>([]);//Значения прогноза
+  const [dates, setDates] = useState<string[]>([]);//Даты прогноза
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([]);//Данные для таблицы
   
-  const [maxSale, setMaxSale] = useState<number>(0);//максимальная продажа
-  const [sumSale, setSumSale] = useState<number>(0);//cумма продаж
-  const [ssales, setSales] = useState<number[]>([]);//значения продаж
-  const [sdates, setSDates] = useState<string[]>([]);//даты продаж
+  const [maxSale, setMaxSale] = useState<number>(0);//Максимальная продажа
+  const [sumSale, setSumSale] = useState<number>(0);//Сумма продаж
+  const [ssales, setSales] = useState<number[]>([0,0]);//Значения продаж
+  const [sdates, setSDates] = useState<string[]>(['','']);//Даты продаж
   // const [salesTransformedData, setSalesTransformedData] = useState<TransformedData[]>([]);//данные для таблицы
   useEffect(() => {
     if (predicto.length > 0) {
@@ -204,6 +204,7 @@ const Statistics = () => {
     }
 
   }, [predicto,sales]);
+
   if (targets.length > 0 && dates.length > 0) {
     return (
       <div className="" style={{ margin: '40px 24px', width: '100vw' }}>
