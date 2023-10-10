@@ -74,6 +74,8 @@ const OpenComponent: React.FC = () => {
         .catch((error) => {
           console.error('Ошибка при отправке файла', error);
         });
+        setIsModalOpen(false);
+        setSelectedFile(null);
     }
   };
 
