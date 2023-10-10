@@ -1,32 +1,32 @@
 .export {
-    background-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 48px;
-    padding: 12px 16px;
-    align-items: center;
-    color: #003C96;
-    cursor: pointer;
-    border-radius: 24px;
-    border: 1px solid #003C96;
-    transition: all 0.2s ease-in;
-    width: 100%;
-    text-align: center;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 12px 16px;
+  align-items: center;
+  color: #003c96;
+  cursor: pointer;
+  border-radius: 24px;
+  border: 1px solid #003c96;
+  transition: all 0.2s ease-in;
+  width: 100%;
+  text-align: center;
 
-    &:focus {
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
-    }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+  }
 
-    &:hover {
-        background-color: #0048b5;
-        color: #FFF;
-        border-color: #0048b5;
-        box-shadow: none;
-    }
+  &:hover {
+    background-color: #0048b5;
+    color: #fff;
+    border-color: #0048b5;
+    box-shadow: none;
+  }
 
-    &:active {
-        background-color: #0062cc;
-        border-color: #005cbf;
-    }
+  &:active {
+    background-color: #0062cc;
+    border-color: #005cbf;
+  }
 }

@@ -20,6 +20,14 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { RootState } from '../../services/redux/store';
 import { useAppSelector } from '../../services/typeHooks';
 import { useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { DOWNLOAD_URL } from '../../utils/constants';
+import { FetchDownloadXlsx, FetchDownloadCsv } from '../../utils/downloadAPI';
 
 // const seriesA = {
 //   id: 'Aseria',
@@ -101,28 +109,33 @@ interface TransformedData {
 }
 
 const Statistics = () => {
-  const sales = useAppSelector((state: RootState) => state.sale.data);//данные продаж
-  const predicto = useAppSelector((state: RootState) => state.predict.data);//данные прогноза
+  const sales = useAppSelector((state: RootState) => state.sale.data); //данные продаж
+  const predicto = useAppSelector((state: RootState) => state.predict.data); //данные прогноза
 
-  const [maxPredict, setMaxPredict] = useState<number>(0);//Максимальный прогноз
-  const [sumPredict, setSumPredict] = useState<number>(0);//Сумма прогноза
-  const [targets, setTargets] = useState<number[]>([]);//Значения прогноза
-  const [dates, setDates] = useState<string[]>([]);//Даты прогноза
-  const [transformedData, setTransformedData] = useState<TransformedData[]>([]);//Данные для таблицы
-  
-  const [maxSale, setMaxSale] = useState<number>(0);//Максимальная продажа
-  const [sumSale, setSumSale] = useState<number>(0);//Сумма продаж
-  const [ssales, setSales] = useState<number[]>([0,0]);//Значения продаж
-  const [sdates, setSDates] = useState<string[]>(['','']);//Даты продаж
-  // const [salesTransformedData, setSalesTransformedData] = useState<TransformedData[]>([]);//данные для таблицы
+  const [maxPredict, setMaxPredict] = useState<number>(0); //Максимальный прогноз
+  const [sumPredict, setSumPredict] = useState<number>(0); //Сумма прогноза
+  const [targets, setTargets] = useState<number[]>([]); //Значения прогноза
+  const [dates, setDates] = useState<string[]>([]); //Даты прогноза
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([]); //Данные для таблицы
+
+  const [maxSale, setMaxSale] = useState<number>(0); //Максимальная продажа
+  const [sumSale, setSumSale] = useState<number>(0); //Сумма продаж
+  const [ssales, setSales] = useState<number[]>([0, 0]); //Значения продаж
+  const [sdates, setSDates] = useState<string[]>(['', '']); //Даты продаж
+
+  const [open, setOpen] = useState(false);
+  const tk = useAppSelector((state) => state.filter.tk);
+  const sku = useAppSelector((state) => state.filter.sku);
+  const token = localStorage.getItem('accessToken') ?? '';
+  // console.log(predicto);
   useEffect(() => {
     if (predicto.length > 0) {
       const predictArray = predicto[0].product.predict;
       const sortedData = [...predictArray].reverse();
       const updatedTargets: number[] = [];
       const updatedDates: string[] = [];
-      let lmax = 0;//локальный максимум
-      let lsum = 0;//локальная сумма
+      let lmax = 0; //локальный максимум
+      let lsum = 0; //локальная сумма
       sortedData.forEach((item) => {
         if (lmax < item.target) lmax = item.target;
         lsum += item.target;
@@ -164,8 +177,8 @@ const Statistics = () => {
       const ssortedData = [...spredictArray].reverse();
       const supdatedTargets: number[] = [];
       const supdatedDates: string[] = [];
-      let slmax = 0;//локальный максимум
-      let slsum = 0;//локальная сумма
+      let slmax = 0; //локальный максимум
+      let slsum = 0; //локальная сумма
       ssortedData.forEach((item) => {
         if (slmax < item.pr_sales_in_units) slmax = item.pr_sales_in_units;
         slsum += item.pr_sales_in_units;
@@ -202,9 +215,24 @@ const Statistics = () => {
       // });
       // setSalesTransformedData(stData);
     }
+  }, [predicto, sales]);
 
-  }, [predicto,sales]);
+  const handleExportClick = () => {
+    setOpen(true);
+  };
 
+  const handleExcelExport = () => {
+    const downloadUrl = `${DOWNLOAD_URL}?filetype=xlsx&st_id=${tk.id}&pr_sku_id=${sku.id}`;
+    FetchDownloadXlsx(downloadUrl, token);
+    setOpen(false);
+  };
+
+  const handleCsvExport = () => {
+    const downloadUrl = `${DOWNLOAD_URL}?filetype=csv&st_id=${tk.id}&pr_sku_id=${sku.id}`;
+    FetchDownloadCsv(downloadUrl, token);
+    setOpen(false);
+  };
+  
   if (targets.length > 0 && dates.length > 0) {
     return (
       <div className="" style={{ margin: '40px 24px', width: '100vw' }}>
@@ -245,7 +273,8 @@ const Statistics = () => {
                     yAxis={[
                       {
                         min: 0,
-                        max: (maxSale > maxPredict) ? maxSale + 1: maxPredict + 1,
+                        max:
+                          maxSale > maxPredict ? maxSale + 1 : maxPredict + 1,
                       },
                     ]}
                     series={[
@@ -506,7 +535,28 @@ const Statistics = () => {
                   -
                 </LineDescRightPart>
               </LineDesc>
-              <button className={styles.export}>Выгрузить</button>
+              <button className={styles.export} onClick={handleExportClick}>
+                Выгрузить
+              </button>
+              <Dialog open={open} onClose={() => setOpen(false)}>
+                <DialogTitle>Выберите формат выгрузки</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Выберите формат для выгрузки данных:
+                  </DialogContentText>
+                  <Button onClick={handleExcelExport} color="primary">
+                    Выгрузить в Excel
+                  </Button>
+                  <Button onClick={handleCsvExport} color="primary">
+                    Выгрузить в CSV
+                  </Button>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => setOpen(false)} color="primary">
+                    Отмена
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </CustomPaper>
           </Grid>
         </Grid>
