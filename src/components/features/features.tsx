@@ -61,6 +61,7 @@ const Features: FC<TFeatures> = ({ title }) => {
     border: '1px solid #CDCDCD',
     color: '#003C96',
     mr: '16px',
+    mb: '16px',
     fontSize: '16px',
     fontWeigth: '400',
     lineHeight: '24px',

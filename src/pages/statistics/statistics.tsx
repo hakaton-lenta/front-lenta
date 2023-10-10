@@ -109,18 +109,24 @@ interface TransformedData {
 }
 
 const Statistics = () => {
-  // const sales = useAppSelector((state: RootState) => state.sale.data);
+  const sales = useAppSelector((state: RootState) => state.sale.data); //данные продаж
   const predicto = useAppSelector((state: RootState) => state.predict.data); //данные прогноза
-  const [maxPredict, setMaxPredict] = useState<number>(0); //максимальный прогноз
+
+  const [maxPredict, setMaxPredict] = useState<number>(0); //Максимальный прогноз
   const [sumPredict, setSumPredict] = useState<number>(0); //Сумма прогноза
-  const [targets, setTargets] = useState<number[]>([]); //значения прогноза
-  const [dates, setDates] = useState<string[]>([]); //даты прогноза
-  const [transformedData, setTransformedData] = useState<TransformedData[]>([]); //данные для таблицы
+  const [targets, setTargets] = useState<number[]>([]); //Значения прогноза
+  const [dates, setDates] = useState<string[]>([]); //Даты прогноза
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([]); //Данные для таблицы
+
+  const [maxSale, setMaxSale] = useState<number>(0); //Максимальная продажа
+  const [sumSale, setSumSale] = useState<number>(0); //Сумма продаж
+  const [ssales, setSales] = useState<number[]>([0, 0]); //Значения продаж
+  const [sdates, setSDates] = useState<string[]>(['', '']); //Даты продаж
+
   const [open, setOpen] = useState(false);
   const tk = useAppSelector((state) => state.filter.tk);
   const sku = useAppSelector((state) => state.filter.sku);
   const token = localStorage.getItem('accessToken') ?? '';
-
   // console.log(predicto);
   useEffect(() => {
     if (predicto.length > 0) {
@@ -166,7 +172,50 @@ const Statistics = () => {
       });
       setTransformedData(tData);
     }
-  }, [predicto]);
+    if (sales.length > 0 && sales[0].products.length > 0) {
+      const spredictArray = sales[0].products[0].sales;
+      const ssortedData = [...spredictArray].reverse();
+      const supdatedTargets: number[] = [];
+      const supdatedDates: string[] = [];
+      let slmax = 0; //локальный максимум
+      let slsum = 0; //локальная сумма
+      ssortedData.forEach((item) => {
+        if (slmax < item.pr_sales_in_units) slmax = item.pr_sales_in_units;
+        slsum += item.pr_sales_in_units;
+        supdatedTargets.push(item.pr_sales_in_units);
+        const sdate = new Date(item.date);
+        const sformattedDate = `${
+          sdate.getDate() < 10 ? '0' : ''
+        }${sdate.getDate()}.${sdate.getMonth() + 1 < 10 ? '0' : ''}${
+          sdate.getMonth() + 1
+        }`;
+        supdatedDates.push(sformattedDate);
+      });
+      setMaxSale(slmax);
+      setSumSale(slsum);
+      setSales(supdatedTargets);
+      setSDates(supdatedDates);
+      // let increment = 0;
+      // const stData: TransformedData[] = ssortedData.map((item) => {
+      //   const date = new Date(item.date);
+      //   increment++;
+      //   const formattedDate = `${
+      //     date.getDate() < 10 ? '0' : ''
+      //   }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
+      //     date.getMonth() + 1
+      //   }`;
+      //   return {
+      //     id: increment,
+      //     st_id: sales[0].st_id,
+      //     pr_sku_id: sales[0].products[0].pr_sku_id,
+      //     pr_uom_id: sales[0].products[0].pr_uom_id.toString(), // преобразовываем в строку
+      //     data: formattedDate,
+      //     target: item.pr_sales_in_units.toString(), // преобразовываем в строку
+      //   };
+      // });
+      // setSalesTransformedData(stData);
+    }
+  }, [predicto, sales]);
 
   const handleExportClick = () => {
     setOpen(true);
@@ -183,10 +232,10 @@ const Statistics = () => {
     FetchDownloadCsv(downloadUrl, token);
     setOpen(false);
   };
-
+  
   if (targets.length > 0 && dates.length > 0) {
     return (
-      <div className="forecast" style={{ margin: '40px 24px', width: '100vw' }}>
+      <div className="" style={{ margin: '40px 24px', width: '100vw' }}>
         <Features title={'Статистика'} />
         <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={6}>
@@ -217,22 +266,23 @@ const Statistics = () => {
                   <LineChart
                     xAxis={[
                       {
-                        data: dates,
+                        data: sdates,
                         scaleType: 'band',
                       },
                     ]}
                     yAxis={[
                       {
                         min: 0,
-                        max: maxPredict + 1,
+                        max:
+                          maxSale > maxPredict ? maxSale + 1 : maxPredict + 1,
                       },
                     ]}
                     series={[
                       {
                         id: 'Aseria',
-                        data: targets,
+                        data: ssales,
                         label: 'Прогноз',
-                        color: '#2FCBFF',
+                        color: '#FFB900',
                       },
                     ]} //, { ...seriesB }
                     height={252}
@@ -271,7 +321,7 @@ const Statistics = () => {
                     <TitleDesc>Всего:</TitleDesc>
                     <LineDesc>
                       <LineDescLeftPart>Факт</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
+                      <LineDescRightPart>{sumSale}</LineDescRightPart>
                     </LineDesc>
                     <LineDesc>
                       <LineDescLeftPart>Прогноз</LineDescLeftPart>
@@ -345,6 +395,8 @@ const Statistics = () => {
                         label: 'Прогноз',
                         color: '#2FCBFF',
                         area: true,
+                        showMark: false,
+                        curve: 'natural',
                       },
                     ]}
                     height={252}
