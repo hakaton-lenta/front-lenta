@@ -1,6 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import styles from './statistics.module.scss';
 import Features from '../../components/features/features';
+import Error from '../../components/error';
 import {
   CustomPaper,
   LeftDescBlock,
@@ -114,8 +115,8 @@ const Statistics = () => {
 
   const [maxPredict, setMaxPredict] = useState<number>(0); //Максимальный прогноз
   const [sumPredict, setSumPredict] = useState<number>(0); //Сумма прогноза
-  const [targets, setTargets] = useState<number[]>([]); //Значения прогноза
-  const [dates, setDates] = useState<string[]>([]); //Даты прогноза
+  const [targets, setTargets] = useState<number[]>([0, 0]); //Значения прогноза
+  const [dates, setDates] = useState<string[]>(['', '']); //Даты прогноза
   const [transformedData, setTransformedData] = useState<TransformedData[]>([]); //Данные для таблицы
 
   const [maxSale, setMaxSale] = useState<number>(0); //Максимальная продажа
@@ -127,7 +128,6 @@ const Statistics = () => {
   const tk = useAppSelector((state) => state.filter.tk);
   const sku = useAppSelector((state) => state.filter.sku);
   const token = localStorage.getItem('accessToken') ?? '';
-  // console.log(predicto);
   useEffect(() => {
     if (predicto.length > 0) {
       const predictArray = predicto[0].product.predict;
@@ -232,338 +232,345 @@ const Statistics = () => {
     FetchDownloadCsv(downloadUrl, token);
     setOpen(false);
   };
-  
-  if (targets.length > 0 && dates.length > 0) {
-    return (
-      <div className="" style={{ margin: '40px 24px', width: '100vw' }}>
-        <Features title={'Статистика'} />
-        <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={6}>
-            <CustomPaper>
-              <TitleGraphBlock>
-                <TitleGraph>
-                  График продаж и прогнозирования
-                  <br />
-                  спроса за предыдущие 14 дней
-                </TitleGraph>
-                <TitleList>
-                  <TitleListLi>
-                    <TitleListSpan
-                      style={{ backgroundColor: '#2FCBFF' }}
-                    ></TitleListSpan>
-                    <Box>Прогноз</Box>
-                  </TitleListLi>
-                  <TitleListLi>
-                    <TitleListSpan
-                      style={{ backgroundColor: '#FFB900' }}
-                    ></TitleListSpan>
-                    <Box>Факт</Box>
-                  </TitleListLi>
-                </TitleList>
-              </TitleGraphBlock>
-              <Grid style={{ display: 'flex' }}>
-                <LeftDescBlock>
-                  <LineChart
-                    xAxis={[
-                      {
-                        data: sdates,
-                        scaleType: 'band',
+
+  try{
+    if (targets.length > 0 && dates.length > 0) {
+      return (
+        <div className="" style={{ margin: '40px 24px', width: '100vw' }}>
+          <Features title={'Статистика'} />
+          <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <Grid item xs={6}>
+              <CustomPaper>
+                <TitleGraphBlock>
+                  <TitleGraph>
+                    График продаж и прогнозирования
+                    <br />
+                    спроса за предыдущие 14 дней
+                  </TitleGraph>
+                  <TitleList>
+                    <TitleListLi>
+                      <TitleListSpan
+                        style={{ backgroundColor: '#2FCBFF' }}
+                      ></TitleListSpan>
+                      <Box>Прогноз</Box>
+                    </TitleListLi>
+                    <TitleListLi>
+                      <TitleListSpan
+                        style={{ backgroundColor: '#FFB900' }}
+                      ></TitleListSpan>
+                      <Box>Факт</Box>
+                    </TitleListLi>
+                  </TitleList>
+                </TitleGraphBlock>
+                <Grid style={{ display: 'flex' }}>
+                  <LeftDescBlock>
+                    <LineChart
+                      xAxis={[
+                        {
+                          data: sdates,
+                          scaleType: 'band',
+                        },
+                      ]}
+                      yAxis={[
+                        {
+                          min: 0,
+                          max:
+                            maxSale > maxPredict ? maxSale + 1 : maxPredict + 1,
+                        },
+                      ]}
+                      series={[
+                        {
+                          id: 'Aseria',
+                          data: ssales,
+                          label: 'Прогноз',
+                          color: '#FFB900',
+                        },
+                      ]} //, { ...seriesB }
+                      height={252}
+                      margin={{ top: 10, right: 30, bottom: 20, left: 33 }}
+                      sx={{
+                        '& .MuiChartsAxis-left .MuiChartsAxis-line': {
+                          display: 'none',
+                        },
+                        '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
+                          stroke: '#F0F0F0',
+                          strokeWidth: 1,
+                        },
+                        '& .MuiChartsAxis-tick': {
+                          stroke: '#F0F0F0',
+                          strokeWidth: 1,
+                        },
+                        '.MuiChartsLegend-root': {
+                          display: 'none',
+                        },
+                        '.MuiChartsAxis-tickLabel': {
+                          fontFamily: 'Futura PT',
+                          color: '#4D4D4D',
+                          fontSize: '10px',
+                        },
+                        '.MuiMarkElement-root1': {
+                          stroke: '#8884d8',
+                          scale: '0.6',
+                          fill: '#fff',
+                          strokeWidth: 1,
+                        },
+                      }}
+                    />
+                  </LeftDescBlock>
+                  <RightDescBlock>
+                    <div style={{ marginBottom: '16px' }}>
+                      <TitleDesc>Всего:</TitleDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>Факт</LineDescLeftPart>
+                        <LineDescRightPart>{sumSale}</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>Прогноз</LineDescLeftPart>
+                        <LineDescRightPart>{sumPredict}</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>
+                          Точность
+                          <br /> прогноза
+                        </LineDescLeftPart>
+                        <LineDescRightPart style={{ color: 'green' }}>
+                          -
+                        </LineDescRightPart>
+                      </LineDesc>
+                    </div>
+                    <div>
+                      <TitleDesc>В прошлом:</TitleDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>год</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>месяц</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>неделя</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                    </div>
+                  </RightDescBlock>
+                </Grid>
+              </CustomPaper>
+            </Grid>
+            <Grid item xs={6}>
+              <CustomPaper>
+                <TitleGraphBlock>
+                  <TitleGraph>
+                    График прогнозирования спроса
+                    <br />
+                    на следующие 14 дней
+                  </TitleGraph>
+                  <TitleList>
+                    <TitleListLi>
+                      <TitleListSpan
+                        style={{ backgroundColor: '#2FCBFF' }}
+                      ></TitleListSpan>
+                      <Box>Прогноз</Box>
+                    </TitleListLi>
+                  </TitleList>
+                </TitleGraphBlock>
+                <Grid style={{ display: 'flex' }}>
+                  <LeftDescBlock>
+                    <LineChart
+                      xAxis={[
+                        {
+                          data: dates,
+                          scaleType: 'band',
+                        },
+                      ]}
+                      yAxis={[
+                        {
+                          min: 0,
+                          max: maxPredict + 1,
+                        },
+                      ]}
+                      series={[
+                        {
+                          id: 'Aseria',
+                          data: targets,
+                          label: 'Прогноз',
+                          color: '#2FCBFF',
+                          area: true,
+                          showMark: false,
+                          curve: 'natural',
+                        },
+                      ]}
+                      height={252}
+                      margin={{ top: 10, right: 30, bottom: 20, left: 33 }}
+                      sx={{
+                        '& .MuiAreaElement-series-Aseria': {
+                          fill: "url('#myGradient')",
+                        },
+                        '& .MuiChartsAxis-left .MuiChartsAxis-line': {
+                          display: 'none',
+                        },
+                        '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
+                          stroke: '#F0F0F0',
+                          strokeWidth: 1,
+                        },
+                        '& .MuiChartsAxis-tick': {
+                          stroke: '#F0F0F0',
+                          strokeWidth: 1,
+                        },
+                        '.MuiChartsLegend-root': {
+                          display: 'none',
+                        },
+                        '.MuiChartsAxis-tickLabel': {
+                          fontFamily: 'Futura PT',
+                          color: '#4D4D4D',
+                          fontSize: '10px',
+                        },
+                      }}
+                    >
+                      <defs>
+                        <linearGradient
+                          id="myGradient"
+                          gradientTransform="rotate(90)"
+                        >
+                          <stop offset="15%" stopColor="#2FCBFF" />
+                          <stop
+                            offset="100%"
+                            stopColor="rgba(47, 203, 255, 0.10)"
+                          />
+                        </linearGradient>
+                      </defs>
+                    </LineChart>
+                  </LeftDescBlock>
+                  <RightDescBlock>
+                    <div style={{ marginBottom: '16px' }}>
+                      <TitleDesc>Всего:</TitleDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>Прибыль</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>Потери</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>
+                          Точность
+                          <br /> прогноза
+                        </LineDescLeftPart>
+                        <LineDescRightPart style={{ color: 'green' }}>
+                          -
+                        </LineDescRightPart>
+                      </LineDesc>
+                    </div>
+                    <div>
+                      <TitleDesc>В прошлом:</TitleDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>год</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>месяц</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                      <LineDesc>
+                        <LineDescLeftPart>неделя</LineDescLeftPart>
+                        <LineDescRightPart>-</LineDescRightPart>
+                      </LineDesc>
+                    </div>
+                  </RightDescBlock>
+                </Grid>
+              </CustomPaper>
+            </Grid>
+            <Grid item xs={9}>
+              <CustomPaper style={{ padding: '0' }}>
+                <TitleGraphBlock
+                  style={{ alignItems: 'center', padding: '0 12px', margin: '0' }}
+                >
+                  <TitleGraph>Фактические и спрогнозированные продажи</TitleGraph>
+                </TitleGraphBlock>
+                <Box sx={{ height: 400, width: '100%' }}>
+                  <DataGrid
+                    rows={transformedData}
+                    columns={columns}
+                    initialState={{
+                      pagination: {
+                        paginationModel: {
+                          pageSize: 5,
+                        },
                       },
-                    ]}
-                    yAxis={[
-                      {
-                        min: 0,
-                        max:
-                          maxSale > maxPredict ? maxSale + 1 : maxPredict + 1,
-                      },
-                    ]}
-                    series={[
-                      {
-                        id: 'Aseria',
-                        data: ssales,
-                        label: 'Прогноз',
-                        color: '#FFB900',
-                      },
-                    ]} //, { ...seriesB }
-                    height={252}
-                    margin={{ top: 10, right: 30, bottom: 20, left: 33 }}
+                    }}
+                    pageSizeOptions={[5]}
+                    // checkboxSelection
+                    disableRowSelectionOnClick
                     sx={{
-                      '& .MuiChartsAxis-left .MuiChartsAxis-line': {
-                        display: 'none',
+                      '&.MuiDataGrid-root': {
+                        borderRadius: '0',
+                        border: 'none',
                       },
-                      '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
-                        stroke: '#F0F0F0',
-                        strokeWidth: 1,
+                      '& .MuiDataGrid-cell': {
+                        // borderBottom: 'none',
                       },
-                      '& .MuiChartsAxis-tick': {
-                        stroke: '#F0F0F0',
-                        strokeWidth: 1,
-                      },
-                      '.MuiChartsLegend-root': {
-                        display: 'none',
-                      },
-                      '.MuiChartsAxis-tickLabel': {
-                        fontFamily: 'Futura PT',
-                        color: '#4D4D4D',
-                        fontSize: '10px',
-                      },
-                      '.MuiMarkElement-root1': {
-                        stroke: '#8884d8',
-                        scale: '0.6',
-                        fill: '#fff',
-                        strokeWidth: 1,
+                      '& .MuiDataGrid-columnHeaders': {
+                        // backgroundColor: '#F0F0F0',
+                        backgroundColor: 'rgba(0,0,0,0.02)',
                       },
                     }}
                   />
-                </LeftDescBlock>
-                <RightDescBlock>
-                  <div style={{ marginBottom: '16px' }}>
-                    <TitleDesc>Всего:</TitleDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>Факт</LineDescLeftPart>
-                      <LineDescRightPart>{sumSale}</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>Прогноз</LineDescLeftPart>
-                      <LineDescRightPart>{sumPredict}</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>
-                        Точность
-                        <br /> прогноза
-                      </LineDescLeftPart>
-                      <LineDescRightPart style={{ color: 'green' }}>
-                        -
-                      </LineDescRightPart>
-                    </LineDesc>
-                  </div>
-                  <div>
-                    <TitleDesc>В прошлом:</TitleDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>год</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>месяц</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>неделя</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                  </div>
-                </RightDescBlock>
-              </Grid>
-            </CustomPaper>
+                </Box>
+              </CustomPaper>
+            </Grid>
+            <Grid item xs={3}>
+              <CustomPaper style={{ padding: '12px' }}>
+                <TitleDesc>Спрос на 14 дней:</TitleDesc>
+                <LineDesc>
+                  <LineDescLeftPart>Прогноз</LineDescLeftPart>
+                  <LineDescRightPart>{sumPredict}</LineDescRightPart>
+                </LineDesc>
+                <LineDesc>
+                  <LineDescLeftPart>Остаток</LineDescLeftPart>
+                  <LineDescRightPart>-</LineDescRightPart>
+                </LineDesc>
+                <LineDesc>
+                  <LineDescLeftPart>Закупка</LineDescLeftPart>
+                  <LineDescRightPart style={{ color: 'green' }}>
+                    -
+                  </LineDescRightPart>
+                </LineDesc>
+                <button className={styles.export} onClick={handleExportClick}>
+                  Выгрузить
+                </button>
+                <Dialog open={open} onClose={() => setOpen(false)}>
+                  <DialogTitle>Выберите формат выгрузки</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      Выберите формат для выгрузки данных:
+                    </DialogContentText>
+                    <Button onClick={handleExcelExport} color="primary">
+                      Выгрузить в Excel
+                    </Button>
+                    <Button onClick={handleCsvExport} color="primary">
+                      Выгрузить в CSV
+                    </Button>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => setOpen(false)} color="primary">
+                      Отмена
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </CustomPaper>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <CustomPaper>
-              <TitleGraphBlock>
-                <TitleGraph>
-                  График прогнозирования спроса
-                  <br />
-                  на следующие 14 дней
-                </TitleGraph>
-                <TitleList>
-                  <TitleListLi>
-                    <TitleListSpan
-                      style={{ backgroundColor: '#2FCBFF' }}
-                    ></TitleListSpan>
-                    <Box>Прогноз</Box>
-                  </TitleListLi>
-                </TitleList>
-              </TitleGraphBlock>
-              <Grid style={{ display: 'flex' }}>
-                <LeftDescBlock>
-                  <LineChart
-                    xAxis={[
-                      {
-                        data: dates,
-                        scaleType: 'band',
-                      },
-                    ]}
-                    yAxis={[
-                      {
-                        min: 0,
-                        max: maxPredict + 1,
-                      },
-                    ]}
-                    series={[
-                      {
-                        id: 'Aseria',
-                        data: targets,
-                        label: 'Прогноз',
-                        color: '#2FCBFF',
-                        area: true,
-                        showMark: false,
-                        curve: 'natural',
-                      },
-                    ]}
-                    height={252}
-                    margin={{ top: 10, right: 30, bottom: 20, left: 33 }}
-                    sx={{
-                      '& .MuiAreaElement-series-Aseria': {
-                        fill: "url('#myGradient')",
-                      },
-                      '& .MuiChartsAxis-left .MuiChartsAxis-line': {
-                        display: 'none',
-                      },
-                      '& .MuiChartsAxis-bottom .MuiChartsAxis-line': {
-                        stroke: '#F0F0F0',
-                        strokeWidth: 1,
-                      },
-                      '& .MuiChartsAxis-tick': {
-                        stroke: '#F0F0F0',
-                        strokeWidth: 1,
-                      },
-                      '.MuiChartsLegend-root': {
-                        display: 'none',
-                      },
-                      '.MuiChartsAxis-tickLabel': {
-                        fontFamily: 'Futura PT',
-                        color: '#4D4D4D',
-                        fontSize: '10px',
-                      },
-                    }}
-                  >
-                    <defs>
-                      <linearGradient
-                        id="myGradient"
-                        gradientTransform="rotate(90)"
-                      >
-                        <stop offset="15%" stopColor="#2FCBFF" />
-                        <stop
-                          offset="100%"
-                          stopColor="rgba(47, 203, 255, 0.10)"
-                        />
-                      </linearGradient>
-                    </defs>
-                  </LineChart>
-                </LeftDescBlock>
-                <RightDescBlock>
-                  <div style={{ marginBottom: '16px' }}>
-                    <TitleDesc>Всего:</TitleDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>Прибыль</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>Потери</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>
-                        Точность
-                        <br /> прогноза
-                      </LineDescLeftPart>
-                      <LineDescRightPart style={{ color: 'green' }}>
-                        -
-                      </LineDescRightPart>
-                    </LineDesc>
-                  </div>
-                  <div>
-                    <TitleDesc>В прошлом:</TitleDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>год</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>месяц</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                    <LineDesc>
-                      <LineDescLeftPart>неделя</LineDescLeftPart>
-                      <LineDescRightPart>-</LineDescRightPart>
-                    </LineDesc>
-                  </div>
-                </RightDescBlock>
-              </Grid>
-            </CustomPaper>
-          </Grid>
-          <Grid item xs={9}>
-            <CustomPaper style={{ padding: '0' }}>
-              <TitleGraphBlock
-                style={{ alignItems: 'center', padding: '0 12px', margin: '0' }}
-              >
-                <TitleGraph>Фактические и спрогнозированные продажи</TitleGraph>
-              </TitleGraphBlock>
-              <Box sx={{ height: 400, width: '100%' }}>
-                <DataGrid
-                  rows={transformedData}
-                  columns={columns}
-                  initialState={{
-                    pagination: {
-                      paginationModel: {
-                        pageSize: 5,
-                      },
-                    },
-                  }}
-                  pageSizeOptions={[5]}
-                  // checkboxSelection
-                  disableRowSelectionOnClick
-                  sx={{
-                    '&.MuiDataGrid-root': {
-                      borderRadius: '0',
-                      border: 'none',
-                    },
-                    '& .MuiDataGrid-cell': {
-                      // borderBottom: 'none',
-                    },
-                    '& .MuiDataGrid-columnHeaders': {
-                      // backgroundColor: '#F0F0F0',
-                      backgroundColor: 'rgba(0,0,0,0.02)',
-                    },
-                  }}
-                />
-              </Box>
-            </CustomPaper>
-          </Grid>
-          <Grid item xs={3}>
-            <CustomPaper style={{ padding: '12px' }}>
-              <TitleDesc>Спрос на 14 дней:</TitleDesc>
-              <LineDesc>
-                <LineDescLeftPart>Прогноз</LineDescLeftPart>
-                <LineDescRightPart>{sumPredict}</LineDescRightPart>
-              </LineDesc>
-              <LineDesc>
-                <LineDescLeftPart>Остаток</LineDescLeftPart>
-                <LineDescRightPart>-</LineDescRightPart>
-              </LineDesc>
-              <LineDesc>
-                <LineDescLeftPart>Закупка</LineDescLeftPart>
-                <LineDescRightPart style={{ color: 'green' }}>
-                  -
-                </LineDescRightPart>
-              </LineDesc>
-              <button className={styles.export} onClick={handleExportClick}>
-                Выгрузить
-              </button>
-              <Dialog open={open} onClose={() => setOpen(false)}>
-                <DialogTitle>Выберите формат выгрузки</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Выберите формат для выгрузки данных:
-                  </DialogContentText>
-                  <Button onClick={handleExcelExport} color="primary">
-                    Выгрузить в Excel
-                  </Button>
-                  <Button onClick={handleCsvExport} color="primary">
-                    Выгрузить в CSV
-                  </Button>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={() => setOpen(false)} color="primary">
-                    Отмена
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </CustomPaper>
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  }
+  catch{
+    return (
+      <Error />
     );
-  } else {
-    return <></>;
   }
 };
 
