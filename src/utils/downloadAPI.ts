@@ -80,7 +80,6 @@ export async function uploadFile(file: File, token: string) {
         body: formData,
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'text/csv',
         },
       },
     );
