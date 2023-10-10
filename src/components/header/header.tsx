@@ -14,11 +14,12 @@ const Header = () => {
   );
   const mail = useAppSelector((state: RootState) => state.user.user?.email);
   const access = localStorage.getItem('accessToken') ?? '';
+  const refresh = localStorage.getItem('refreshToken') ?? '';
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logoutUser({ access })).then((resultAction) => {
+    dispatch(logoutUser({ refresh })).then((resultAction) => {
       if (logoutUser.fulfilled.match(resultAction)) {
         navigate(ROUTE_LOGIN);
       } else {

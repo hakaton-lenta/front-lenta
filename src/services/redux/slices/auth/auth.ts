@@ -32,11 +32,11 @@ export const loginUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   '@@auth/logout',
   async (
-    payload: { access: string },
+    payload: { refresh: string },
     { fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const response = await logout(payload.access);
+      const response = await logout(payload.refresh);
       return fulfillWithValue(response);
     } catch (error: unknown) {
       return rejectWithValue({ error: 'Failed to logout' }); // Возвращаем объект с ошибкой

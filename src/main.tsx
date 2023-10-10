@@ -41,15 +41,16 @@ const App = () => {
     (state: RootState) => state.user.isLoggedIn,
   );
   const access = localStorage.getItem('accessToken') ?? '';
+  const refresh = localStorage.getItem('refreshToken') ?? '';
   useEffect(() => {
     if (access.length !== 0) {
       dispatch(getProfileUser({ access }));
       dispatch(getShopApi({ token: access }));
     } else {
-      dispatch(logoutUser({ access }));
+      dispatch(logoutUser({ refresh }));
       <Navigate to={ROUTE_LOGIN} />;
     }
-  }, []);
+  }, [isLoggedIn]);
   if (isLoading) {
     return (
       <section className="page">
