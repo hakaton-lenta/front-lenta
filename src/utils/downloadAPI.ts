@@ -1,3 +1,5 @@
+import { UPLOAD_URL } from "./constants";
+
 export const FetchDownloadXlsx = (urlData: string, token: string) => {
   fetch(urlData, {
     method: 'GET',
@@ -72,7 +74,7 @@ export async function uploadFile(file: File, token: string) {
 
   try {
     const response = await fetch(
-      'http://158.160.123.145/api/v1/sales/upload/',
+      UPLOAD_URL,
       {
         method: 'POST',
         body: formData,

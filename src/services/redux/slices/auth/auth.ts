@@ -32,11 +32,11 @@ export const loginUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   '@@auth/logout',
   async (
-    payload: { refresh: string },
+    payload: { access: string; refresh: string },
     { fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const response = await logout(payload.refresh);
+      const response = await logout(payload.access, payload.refresh);
       return fulfillWithValue(response);
     } catch (error: unknown) {
       return rejectWithValue({ error: 'Failed to logout' }); // Возвращаем объект с ошибкой
@@ -117,6 +117,8 @@ const authSlice = createSlice({
         // state.user = action.payload;
       })
       .addCase(logoutUser.rejected, (state, action) => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         state.isLoading = false;
         state.isLoggedIn = false;
         state.error = action.error.message as string;

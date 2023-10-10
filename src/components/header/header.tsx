@@ -19,7 +19,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logoutUser({ refresh })).then((resultAction) => {
+    dispatch(logoutUser({ access, refresh })).then((resultAction) => {
       if (logoutUser.fulfilled.match(resultAction)) {
         navigate(ROUTE_LOGIN);
       } else {

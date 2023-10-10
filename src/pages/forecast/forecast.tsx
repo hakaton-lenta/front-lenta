@@ -90,7 +90,7 @@ const Forecast = () => {
   const [sumPredict, setSumPredict] = useState<number>(0); //Сумма прогноза
   const [targets, setTargets] = useState<number[]>([0, 0]); //Значения прогноза
   const [dates, setDates] = useState<string[]>(['', '']); //Даты прогноза
-  const [transformedData, setTransformedData] = useState<TransformedData[]>([]); //Данные для таблицы
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([{ id: 0, st_id: '', pr_sku_id: '', pr_uom_id: '', data: '', target: '' }]); //Данные для таблицы
 
   const [maxSale, setMaxSale] = useState<number>(0); //Максимальная продажа
   const [sumSale, setSumSale] = useState<number>(0); //Сумма продаж
