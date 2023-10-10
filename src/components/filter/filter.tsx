@@ -171,7 +171,6 @@ const Filter: FC = () => {
   };
 
   //Обработка кнопки поиска
-
   const handleClick = () => {
     dispatch(
       getSaleApi({
@@ -392,7 +391,7 @@ const Filter: FC = () => {
           type="button"
           onClick={handleClick}
           variant="contained"
-          sx={{ mt: 3 }}
+          sx={{ mt: 3, mb: 2 }}
         >
           Найти
         </LoginButton>

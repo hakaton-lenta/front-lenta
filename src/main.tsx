@@ -14,7 +14,7 @@ import RegisterPage from './pages/register';
 import Forecast from './pages/forecast/forecast';
 import Statistics from './pages/statistics/statistics';
 import Loader from './components/loader';
-import { getProfileUser, logoutUser } from './services/redux/slices/auth/auth';
+import { getProfileUser } from './services/redux/slices/auth/auth';
 import Planer from './pages/planer/planer';
 
 const RequireAuth = ({
@@ -41,13 +41,13 @@ const App = () => {
     (state: RootState) => state.user.isLoggedIn,
   );
   const access = localStorage.getItem('accessToken') ?? '';
-  const refresh = localStorage.getItem('refreshToken') ?? '';
+  // const refresh = localStorage.getItem('refreshToken') ?? '';
   useEffect(() => {
     if (access.length !== 0) {
       dispatch(getProfileUser({ access }));
       dispatch(getShopApi({ token: access }));
     } else {
-      dispatch(logoutUser({ refresh }));
+      // dispatch(logoutUser({ access, refresh }));
       <Navigate to={ROUTE_LOGIN} />;
     }
   }, [isLoggedIn]);

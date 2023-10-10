@@ -2,7 +2,7 @@ import { checkRes } from '../../../../utils/fetch';
 import {
   GET_USER_URL,
   LOGIN_URL,
-  // LOGOUT_URL,
+  LOGOUT_URL,
   REGISTER_URL,
   TOKEN_URL,
 } from '../../../../utils/constants';
@@ -31,14 +31,29 @@ const fetchDataAuth = (
   }).then((res) => checkRes(res));
 };
 
+const fetchDataAuthLogout = (
+  url: string,
+  data: { access: string, refresh: string },
+  method = 'POST',
+) => {
+  return fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${data.access}`,
+    },
+    body: JSON.stringify({ refresh: data.refresh}),
+  }).then((res) => checkRes(res));
+};
+
 export const login = (username: string, password: string) => {
   return fetchData(`${LOGIN_URL}`, { username, password });
 };
 
-export const logout = (refresh: string) => {
-  // return fetchDataAuth(`${LOGOUT_URL}`, { access:refresh }, 'POST');
-  console.log(refresh);
-  return true;
+export const logout = (access: string, refresh: string) => {
+  return fetchDataAuthLogout(`${LOGOUT_URL}`, { access, refresh });
+  // console.log(refresh);
+  // return true;
 };
 
 export const register = (email: string, password: string) => {

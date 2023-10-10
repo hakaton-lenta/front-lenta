@@ -117,7 +117,7 @@ const Statistics = () => {
   const [sumPredict, setSumPredict] = useState<number>(0); //Сумма прогноза
   const [targets, setTargets] = useState<number[]>([0, 0]); //Значения прогноза
   const [dates, setDates] = useState<string[]>(['', '']); //Даты прогноза
-  const [transformedData, setTransformedData] = useState<TransformedData[]>([]); //Данные для таблицы
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([{ id: 0, st_id: '', pr_sku_id: '', pr_uom_id: '', data: '', target: '' }]); //Данные для таблицы
 
   const [maxSale, setMaxSale] = useState<number>(0); //Максимальная продажа
   const [sumSale, setSumSale] = useState<number>(0); //Сумма продаж
@@ -152,25 +152,25 @@ const Statistics = () => {
       setSumPredict(lsum);
       setTargets(updatedTargets);
       setDates(updatedDates);
-      let increment = 0;
-      const tData: TransformedData[] = sortedData.map((item) => {
-        const date = new Date(item.date);
-        increment++;
-        const formattedDate = `${
-          date.getDate() < 10 ? '0' : ''
-        }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
-          date.getMonth() + 1
-        }`;
-        return {
-          id: increment,
-          st_id: predicto[0].st_id,
-          pr_sku_id: predicto[0].product.pr_sku_id,
-          pr_uom_id: predicto[0].product.pr_uom_id.toString(), // преобразовываем в строку
-          data: formattedDate,
-          target: item.target.toString(), // преобразовываем в строку
-        };
-      });
-      setTransformedData(tData);
+      // let increment = 0;
+      // const tData: TransformedData[] = sortedData.map((item) => {
+      //   const date = new Date(item.date);
+      //   increment++;
+      //   const formattedDate = `${
+      //     date.getDate() < 10 ? '0' : ''
+      //   }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
+      //     date.getMonth() + 1
+      //   }`;
+      //   return {
+      //     id: increment,
+      //     st_id: predicto[0].st_id,
+      //     pr_sku_id: predicto[0].product.pr_sku_id,
+      //     pr_uom_id: predicto[0].product.pr_uom_id.toString(), // преобразовываем в строку
+      //     data: formattedDate,
+      //     target: item.target.toString(), // преобразовываем в строку
+      //   };
+      // });
+      // setTransformedData(tData);
     }
     if (sales.length > 0 && sales[0].products.length > 0) {
       const spredictArray = sales[0].products[0].sales;
@@ -195,25 +195,25 @@ const Statistics = () => {
       setSumSale(slsum);
       setSales(supdatedTargets);
       setSDates(supdatedDates);
-      // let increment = 0;
-      // const stData: TransformedData[] = ssortedData.map((item) => {
-      //   const date = new Date(item.date);
-      //   increment++;
-      //   const formattedDate = `${
-      //     date.getDate() < 10 ? '0' : ''
-      //   }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
-      //     date.getMonth() + 1
-      //   }`;
-      //   return {
-      //     id: increment,
-      //     st_id: sales[0].st_id,
-      //     pr_sku_id: sales[0].products[0].pr_sku_id,
-      //     pr_uom_id: sales[0].products[0].pr_uom_id.toString(), // преобразовываем в строку
-      //     data: formattedDate,
-      //     target: item.pr_sales_in_units.toString(), // преобразовываем в строку
-      //   };
-      // });
-      // setSalesTransformedData(stData);
+      let increment = 0;
+      const stData: TransformedData[] = ssortedData.map((item) => {
+        const date = new Date(item.date);
+        increment++;
+        const formattedDate = `${
+          date.getDate() < 10 ? '0' : ''
+        }${date.getDate()}.${date.getMonth() + 1 < 10 ? '0' : ''}${
+          date.getMonth() + 1
+        }`;
+        return {
+          id: increment,
+          st_id: sales[0].st_id,
+          pr_sku_id: sales[0].products[0].pr_sku_id,
+          pr_uom_id: sales[0].products[0].pr_uom_id.toString(), // преобразовываем в строку
+          data: formattedDate,
+          target: item.pr_sales_in_units.toString(), // преобразовываем в строку
+        };
+      });
+      setTransformedData(stData);
     }
   }, [predicto, sales]);
 
