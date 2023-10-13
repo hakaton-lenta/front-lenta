@@ -13,8 +13,7 @@ const Header = () => {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.user.isLoggedIn,
   );
-  // const mail = useAppSelector((state: RootState) => state.user.user?.email);
-  const mail = '';
+  const mail = useAppSelector((state: RootState) => state.user.user?.email);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const access = localStorage.getItem('accessToken') ?? '';
