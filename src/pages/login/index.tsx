@@ -82,6 +82,7 @@ const LoginPage = () => {
         navigate(ROUTE_HOME);
       } else {
         // Если вход не успешный, устанавливаем состояние ошибки
+        setPassword('');
         setError3('Неверный email или пароль. Пожалуйста, попробуйте снова.');
       }
     });

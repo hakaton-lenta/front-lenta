@@ -537,7 +537,11 @@ const Forecast = () => {
       );
     }
   } catch {
-    return <Error />;
+    return (
+      <section className="page">
+        <Error />
+      </section>
+    );
   }
 };
 

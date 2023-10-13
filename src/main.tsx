@@ -48,9 +48,9 @@ const App = () => {
       dispatch(getShopApi({ token: access }));
     } else {
       dispatch(logoutUser({ access, refresh }));
-      <Navigate to={ROUTE_LOGIN} />;
     }
-  }, [isLoggedIn]);
+  }, [dispatch]);
+
   if (isLoading) {
     return (
       <section className="page">
@@ -107,7 +107,8 @@ const App = () => {
   );
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
+const rootElement = document.getElementById('root')!;
+const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <BrowserRouter>
