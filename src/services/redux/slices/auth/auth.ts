@@ -90,7 +90,8 @@ const authSlice = createSlice({
     builder
       .addCase(loginUser.pending, (state) => {
         // state.isLoading = true;
-        state.isLoggedIn = false;
+        // state.isLoggedIn = false;
+        console.log(state);
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         localStorage.setItem('accessToken', action.payload.access);

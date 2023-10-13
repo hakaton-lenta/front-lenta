@@ -569,7 +569,9 @@ const Statistics = () => {
   }
   catch{
     return (
-      <Error />
+      <section className="page">
+        <Error />
+      </section>
     );
   }
 };

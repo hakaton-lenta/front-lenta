@@ -33,7 +33,7 @@ const fetchDataAuth = (
 
 const fetchDataAuthLogout = (
   url: string,
-  data: { access: string, refresh: string },
+  data: { access: string; refresh: string },
   method = 'POST',
 ) => {
   return fetch(url, {
@@ -42,7 +42,7 @@ const fetchDataAuthLogout = (
       'Content-Type': 'application/json',
       Authorization: `Bearer ${data.access}`,
     },
-    body: JSON.stringify({ refresh: data.refresh}),
+    body: JSON.stringify({ refresh: data.refresh }),
   }).then((res) => checkRes(res));
 };
 
@@ -51,9 +51,9 @@ export const login = (username: string, password: string) => {
 };
 
 export const logout = (access: string, refresh: string) => {
-  return fetchDataAuthLogout(`${LOGOUT_URL}`, { access, refresh });
-  // console.log(refresh);
-  // return true;
+  if (access !== '' && refresh !== '')
+    return fetchDataAuthLogout(`${LOGOUT_URL}`, { access, refresh });
+  else return true;
 };
 
 export const register = (email: string, password: string) => {

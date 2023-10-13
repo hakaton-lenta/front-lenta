@@ -8,16 +8,18 @@ import { EXIT, ROUTE_LOGIN } from '../../utils/constants';
 import { logoutUser } from '../../services/redux/slices/auth/auth';
 import { useAppDispatch, useAppSelector } from '../../services/typeHooks';
 
+
 const Header = () => {
   const isLoggedIn = useAppSelector(
     (state: RootState) => state.user.isLoggedIn,
   );
-  const mail = useAppSelector((state: RootState) => state.user.user?.email);
-  const access = localStorage.getItem('accessToken') ?? '';
-  const refresh = localStorage.getItem('refreshToken') ?? '';
+  // const mail = useAppSelector((state: RootState) => state.user.user?.email);
+  const mail = '';
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const access = localStorage.getItem('accessToken') ?? '';
+  const refresh = localStorage.getItem('refreshToken') ?? '';
+  
   const handleLogout = () => {
     dispatch(logoutUser({ access, refresh })).then((resultAction) => {
       if (logoutUser.fulfilled.match(resultAction)) {
@@ -31,7 +33,7 @@ const Header = () => {
     <div className={styles.header}>
       <img src={logo} alt="" />
       <div>
-        {isLoggedIn || access ? (
+        {isLoggedIn ? (
           // Если пользователь залогинен, показываем кнопку "Выйти"
           <div className={styles.profgroup}>
             <div className={styles.profile}>
@@ -50,15 +52,6 @@ const Header = () => {
         ) : (
           ''
         )}
-        {/* {loggedIn ? (
-          <Link className="header__login" to="#">
-            <button>Войти</button>
-          </Link>
-        ) : (
-          <Link className="header__logout" to="#">
-            <button>Выйти</button>
-          </Link>
-        )} */}
       </div>
     </div>
   );
